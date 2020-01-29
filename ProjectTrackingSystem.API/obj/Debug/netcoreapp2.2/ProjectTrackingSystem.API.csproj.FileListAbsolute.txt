@@ -1,0 +1,14 @@
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\bin\Debug\netcoreapp2.2\ProjectTrackingSystem.API.deps.json
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\bin\Debug\netcoreapp2.2\ProjectTrackingSystem.API.runtimeconfig.json
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\bin\Debug\netcoreapp2.2\ProjectTrackingSystem.API.runtimeconfig.dev.json
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\bin\Debug\netcoreapp2.2\ProjectTrackingSystem.API.dll
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\bin\Debug\netcoreapp2.2\ProjectTrackingSystem.API.pdb
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\obj\Debug\netcoreapp2.2\ProjectTrackingSystem.API.csprojAssemblyReference.cache
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\obj\Debug\netcoreapp2.2\ProjectTrackingSystem.API.csproj.CoreCompileInputs.cache
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\obj\Debug\netcoreapp2.2\ProjectTrackingSystem.API.RazorAssemblyInfo.cache
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\obj\Debug\netcoreapp2.2\ProjectTrackingSystem.API.RazorAssemblyInfo.cs
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\obj\Debug\netcoreapp2.2\ProjectTrackingSystem.API.AssemblyInfoInputs.cache
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\obj\Debug\netcoreapp2.2\ProjectTrackingSystem.API.AssemblyInfo.cs
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\obj\Debug\netcoreapp2.2\ProjectTrackingSystem.API.RazorTargetAssemblyInfo.cache
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\obj\Debug\netcoreapp2.2\ProjectTrackingSystem.API.dll
+D:\ProjectTrackingSystem\ProjectTrackingSystem.API\obj\Debug\netcoreapp2.2\ProjectTrackingSystem.API.pdb
