@@ -1,0 +1,39 @@
+<!-- <p>
+  {{transactionId}}
+</p> -->
+<div class="container mt-3">
+  <h4 style="text-align: center;">Project Transactions Details</h4>  
+ <div class="row">
+    <div style="margin-top: 10px;">
+      <button type="button" class="btn btn-primary" style="margin-bottom:10px; display: inline-block"
+      (click)="openAddModal()"
+     [disabled]="this.transactionId==0">
+        <li class="fa fa-plus"></li> Add New
+      </button>
+    </div>
+    <table class="table">
+      <tr>
+        <th style="width: 20%">Event Type</th>
+        <th style="width: 10%">Date</th>
+        <th style="width: 20%">Description</th>
+        <th style="width: 7%">Department</th>
+        <th style="width: 10%">Responsible</th>
+        <th style="width: 10%">Status</th> 
+        <th style="width: 15%"></th>
+      </tr>
+      <tr *ngFor="let transEvent of transactionEventsList">
+        <td>{{transEvent.eventTypeName}}</td>
+        <td>{{transEvent.eventDate | date}}</td>
+        <td>{{transEvent.remarks}}</td>
+        <td>{{transEvent.departmentName}}</td>
+        <td>{{transEvent.responsibleName}}</td>
+        <td>{{transEvent.eventStatusName}}</td> 
+        <td>
+         <button class="btn btn-info" style="margin-right: 4px;" (click)="editTransEvent(transEvent)"> <li class="fa fa-pencil"></li></button>
+         <button type="button" class="btn btn-danger btn-s" (click)="deleteTransEvent(transEvent.id)"> <span class="fa fa-trash"></span> </button>
+         <button *ngIf="transEvent.url" style="margin-left: 4px;" type="button" class="btn btn-info btn-s" (click)="download(transEvent.url)"> <span class="fa fa-download"></span> </button>         
+        </td>        
+      </tr>
+    </table>
+  </div> 
+</div>

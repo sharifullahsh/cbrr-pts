@@ -1,0 +1,75 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Edit Project</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form #projectForm="ngForm" [formGroup]="projectService.formEditModalProject" id="projectForm" autocomplete="off">
+    <div class="form-group">
+<input type="hidden" formControlName="Id" [value]="project.id">
+      <input placeholder="Project Code " formControlName="ProjectCode" [value]="project.projectCode"
+        [ngClass]="{'is-invalid': projectService.formEditModalProject.get('ProjectCode').errors && projectService.formEditModalProject.get('ProjectCode').touched}"
+        class="form-control">
+      <div class="invalid-feedback"
+        *ngIf="projectService.formEditModalProject.get('ProjectCode').touched && projectService.formEditModalProject.get('ProjectCode').hasError('required')">
+        this field is required</div>
+    </div>
+    <div class="form-group">
+      <input placeholder="Project Name" formControlName="ProjectName" [value]="project.projectName"
+        [ngClass]="{'is-invalid': projectService.formEditModalProject.get('ProjectName').errors && projectService.formEditModalProject.get('ProjectName').touched}"
+        class="form-control">
+      <div class="invalid-feedback"
+        *ngIf="projectService.formEditModalProject.get('ProjectName').touched && projectService.formEditModalProject.get('ProjectName').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+      <input placeholder="Start Date" formControlName="StartDate" [value]="project.startDate | date"
+        [ngClass]="{'is-invalid': projectService.formEditModalProject.get('StartDate').errors && projectService.formEditModalProject.get('StartDate').touched}"
+        class="form-control" type="text" bsDatepicker [bsConfig]="bsConfig">
+      <div class="invalid-feedback"
+        *ngIf="projectService.formEditModalProject.get('StartDate').touched && projectService.formEditModalProject.get('StartDate').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+      <input placeholder="End Date" formControlName="EndDate" [value]="project.endDate | date"
+        [ngClass]="{'is-invalid': projectService.formEditModalProject.get('EndDate').errors && projectService.formEditModalProject.get('EndDate').touched}"
+        class="form-control" type="text" bsDatepicker [bsConfig]="bsConfig">
+      <div class="invalid-feedback"
+        *ngIf="projectService.formEditModalProject.get('EndDate').touched && projectService.formEditModalProject.get('EndDate').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+        <select formControlName="Programme" class="form-control"
+          [ngClass]="{'is-invalid': projectService.formEditModalProject.get('Programme').errors && projectService.formEditModalProject.get('Programme').touched}">
+          <option [ngValue] ="null" disabled selected>Please Select Programme</option>
+          <option *ngFor="let programme of drProgrammes" [value]="programme.id">{{programme.programmeName}}</option>
+        </select>
+        <div class="invalid-feedback"
+        *ngIf="projectService.formEditModalProject.get('Programme').touched && projectService.formEditModalProject.get('Programme').hasError('required')">
+        This field is required</div>
+      </div>
+      <div class="form-group">
+        <select formControlName="Currency" class="form-control" [ngClass]="{'is-invalid': projectService.formEditModalProject.get('Currency').errors && projectService.formEditModalProject.get('Currency').touched}">
+          <option [ngValue] ="null" disabled selected>Please Select Currency</option>
+          <option *ngFor="let currency of drCurrencies" [value]="currency.id">{{currency.currencyName}}</option>
+        </select>
+        <div class="invalid-feedback"
+        *ngIf="projectService.formEditModalProject.get('Currency').touched && projectService.formEditModalProject.get('Currency').hasError('required')">
+        This field is required</div>
+      </div>
+      <div class="form-group">
+        <input placeholder="Budget" formControlName="Budget" [value]="project.budget"
+          [ngClass]="{'is-invalid': projectService.formEditModalProject.get('Budget').errors && projectService.formEditModalProject.get('Budget').touched}"
+          class="form-control">
+        <div class="invalid-feedback"
+          *ngIf="projectService.formEditModalProject.get('Budget').touched && projectService.formEditModalProject.get('Budget').hasError('required')">
+          This field is required</div>
+      </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">cancel</button>
+  <button type="button"  class="btn btn-success" (click)="bsModalRef.hide()"
+    (click)="editProject()">save</button>
+</div>

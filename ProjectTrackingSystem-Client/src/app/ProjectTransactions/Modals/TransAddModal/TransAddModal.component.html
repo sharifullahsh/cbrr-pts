@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">New Transaction</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form #projectForm="ngForm" [formGroup]="transService.formModalTrans" id="TransForm" autocomplete="off">
+    <div class="form-group">
+      <select formControlName="TransactionTypeId" class="form-control"
+        [ngClass]="{'is-invalid': transService.formModalTrans.get('TransactionTypeId').errors && transService.formModalTrans.get('TransactionTypeId').touched}">
+        <option [ngValue]="null" disabled selected>Please Select Transaction Type</option>
+        <option *ngFor="let transType of drTransactionType" [value]="transType.id">{{transType.transactionTypeName}}
+        </option>
+      </select>
+      <div class="invalid-feedback"
+        *ngIf="transService.formModalTrans.get('TransactionTypeId').touched && transService.formModalTrans.get('TransactionTypeId').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+      <input placeholder="Description" formControlName="Description"
+        [ngClass]="{'is-invalid': transService.formModalTrans.get('Description').errors && transService.formModalTrans.get('Description').touched}"
+        class="form-control" type="text">
+      <div class="invalid-feedback"
+        *ngIf="transService.formModalTrans.get('Description').touched && transService.formModalTrans.get('Description').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+      <input placeholder="Transaction Date" formControlName="TransactionDate"
+        [ngClass]="{'is-invalid': transService.formModalTrans.get('TransactionDate').errors && transService.formModalTrans.get('TransactionDate').touched}"
+        class="form-control" type="text" bsDatepicker [bsConfig]="bsConfig">
+      <div class="invalid-feedback"
+        *ngIf="transService.formModalTrans.get('TransactionDate').touched && transService.formModalTrans.get('TransactionDate').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+      <input placeholder="Transaction Amount" formControlName="Amount"
+        [ngClass]="{'is-invalid': transService.formModalTrans.get('Amount').errors && transService.formModalTrans.get('Amount').touched}"
+        class="form-control">
+      <div class="invalid-feedback"
+        *ngIf="transService.formModalTrans.get('Amount').touched && transService.formModalTrans.get('Amount').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+      <select formControlName="CurrencyId" class="form-control"
+        [ngClass]="{'is-invalid': transService.formModalTrans.get('CurrencyId').errors && transService.formModalTrans.get('CurrencyId').touched}">
+        <option [ngValue]="null" disabled selected>Please Select Currency</option>
+        <option *ngFor="let currency of drCurrencies" [value]="currency.id">{{currency.currencyName}}</option>
+      </select>
+      <div class="invalid-feedback"
+        *ngIf="transService.formModalTrans.get('CurrencyId').touched && transService.formModalTrans.get('CurrencyId').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+      <input placeholder="Exchange Rate" formControlName="ExchangeRate"
+        [ngClass]="{'is-invalid': transService.formModalTrans.get('ExchangeRate').errors && transService.formModalTrans.get('ExchangeRate').touched}"
+        class="form-control">
+      <div class="invalid-feedback"
+        *ngIf="transService.formModalTrans.get('ExchangeRate').touched && transService.formModalTrans.get('ExchangeRate').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+      <select formControlName="ProvinceId" class="form-control">
+        <option [ngValue]="null" disabled selected>Please Select Province</option>
+        <option *ngFor="let province of drProvince" [value]="province.id">{{province.provinceName}}</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+  <button type="button" class="btn btn-success" (click)="bsModalRef.hide()" (click)="addTransaction()">Save</button>
+</div>

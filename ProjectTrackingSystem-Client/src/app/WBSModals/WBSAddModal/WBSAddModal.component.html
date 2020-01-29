@@ -1,0 +1,57 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">New WBS</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form #projectForm="ngForm" [formGroup]="WBSService.formModalWBS" id="wbsForm" autocomplete="off">
+    <div class="form-group">
+
+      <input placeholder="WBS ID " formControlName="WBSId"
+        [ngClass]="{'is-invalid': WBSService.formModalWBS.get('WBSId').errors && WBSService.formModalWBS.get('WBSId').touched}"
+        class="form-control">
+      <div class="invalid-feedback"
+        *ngIf="WBSService.formModalWBS.get('WBSId').touched && WBSService.formModalWBS.get('WBSId').hasError('required')">
+        this field is required</div>
+    </div>
+    <div class="form-group">
+      <input placeholder="WBS Name" formControlName="WBSName"
+        [ngClass]="{'is-invalid': WBSService.formModalWBS.get('WBSName').errors && WBSService.formModalWBS.get('WBSName').touched}"
+        class="form-control">
+      <div class="invalid-feedback"
+        *ngIf="WBSService.formModalWBS.get('WBSName').touched && WBSService.formModalWBS.get('WBSName').hasError('required')">
+        This field is required</div>
+    </div>
+    <div class="form-group">
+      <input placeholder="Description" formControlName="Description"
+        [ngClass]="{'is-invalid': WBSService.formModalWBS.get('Description').errors && WBSService.formModalWBS.get('Description').touched}"
+        class="form-control" type="text">
+      <div class="invalid-feedback"
+        *ngIf="WBSService.formModalWBS.get('Description').touched && WBSService.formModalWBS.get('Description').hasError('required')">
+        This field is required</div>
+    </div>  
+      <div class="form-group">
+        <input placeholder="Budget" formControlName="Budget"
+          [ngClass]="{'is-invalid': WBSService.formModalWBS.get('Budget').errors && WBSService.formModalWBS.get('Budget').touched}"
+          class="form-control">
+        <div class="invalid-feedback"
+          *ngIf="WBSService.formModalWBS.get('Budget').touched && WBSService.formModalWBS.get('Budget').hasError('required')">
+          This field is required</div>
+      </div>
+      <div class="form-group">
+        <input placeholder="Target" formControlName="Target"         
+          class="form-control">   
+      </div>
+      <div class="form-group">
+        <input placeholder="Unit Cost" formControlName="UnitCost"         
+          class="form-control">   
+      </div>
+     
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+  <button type="button"  class="btn btn-success" (click)="bsModalRef.hide()"
+    (click)="addWBS()">Save</button>
+</div>
