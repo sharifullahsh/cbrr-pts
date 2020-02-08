@@ -1,70 +1,93 @@
 <<div class="modal-header">
-  <h4 class="modal-title pull-left">New Event</h4>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <h4 class="modal-title pull-left">New Event</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
     <span aria-hidden="true">&times;</span>
   </button>
-</div>
-<div class="modal-body">
-  <form #projectForm="ngForm" [formGroup]="transEventService.formEditModalTrans" id="TransEventForm" autocomplete="off">
-    <div class="form-group">
-      <select formControlName="TransactionEventTypeId" class="form-control"
-        [ngClass]="{'is-invalid': transEventService.formEditModalTrans.get('TransactionEventTypeId').errors && transEventService.formEditModalTrans.get('TransactionEventTypeId').touched}">
-        <option [ngValue]="null" disabled selected>Please Select Event Type</option>
-        <option *ngFor="let eventType of drEventType" [value] ="eventType.id">{{eventType.eventTypeName}}
-        </option>
-      </select>
-      <div class="invalid-feedback"
-        *ngIf="transEventService.formModalTransEvent.get('EventTypeId').touched && transEventService.formModalTransEvent.get('EventTypeId').hasError('required')">
-        This field is required</div>
     </div>
-    <div class="form-group">
-      <input placeholder="Remarks" formControlName="Remarks" [value]= "transEvent.remarks"
-        [ngClass]="{'is-invalid': transEventService.formEditModalTrans.get('Remarks').errors && transEventService.formModalTransEvent.get('Remarks').touched}"
-        class="form-control" type="text">
-      <div class="invalid-feedback"
-        *ngIf="transEventService.formEditModalTrans.get('Remarks').touched && transEventService.formEditModalTrans.get('Remarks').hasError('required')">
-        This field is required</div>
+    <div class="modal-body">
+        <form #projectForm="ngForm" [formGroup]="transEventService.formEditModalTrans" id="TransEventForm" autocomplete="off">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Event Type</div>
+                    </div>
+                    <select formControlName="TransactionEventTypeId" class="form-control" [ngClass]="{'is-invalid': transEventService.formEditModalTrans.get('TransactionEventTypeId').errors && transEventService.formEditModalTrans.get('TransactionEventTypeId').touched}">
+                      <option [ngValue]="null" disabled selected>Please Select Event Type</option>
+                      <option *ngFor="let eventType of drEventType" [value] ="eventType.id">{{eventType.eventTypeName}}
+                      </option>
+                    </select>
+                </div>
+                <div class="invalid-feedback" *ngIf="transEventService.formModalTransEvent.get('EventTypeId').touched && transEventService.formModalTransEvent.get('EventTypeId').hasError('required')">
+                    This field is required</div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Remarks</div>
+                    </div>
+                    <input placeholder="Remarks" formControlName="Remarks" [value]="transEvent.remarks" [ngClass]="{'is-invalid': transEventService.formEditModalTrans.get('Remarks').errors && transEventService.formModalTransEvent.get('Remarks').touched}" class="form-control"
+                        type="text">
+                </div>
+                <div class="invalid-feedback" *ngIf="transEventService.formEditModalTrans.get('Remarks').touched && transEventService.formEditModalTrans.get('Remarks').hasError('required')">
+                    This field is required</div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Event Date</div>
+                    </div>
+                    <input placeholder="Event Date" formControlName="EventDate" [value]="transEvent.eventDate |date" [ngClass]="{'is-invalid': transEventService.formEditModalTrans.get('EventDate').errors && transEventService.formEditModalTrans.get('EventDate').touched}"
+                        class="form-control" type="text" bsDatepicker [bsConfig]="bsConfig">
+                </div>
+                <div class="invalid-feedback" *ngIf="transEventService.formEditModalTrans.get('EventDate').touched && transEventService.formEditModalTrans.get('EventDate').hasError('required')">
+                    This field is required</div>
+            </div>
+            <div class="form-group">
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Department</div>
+                    </div>
+                    <select formControlName="DepartmentId" class="form-control" [ngClass]="{'is-invalid': transEventService.formEditModalTrans.get('DepartmentId').errors && transEventService.formEditModalTrans.get('DepartmentId').touched}">
+              <option [ngValue]="null" disabled selected>Please Select Department</option>
+              <option *ngFor="let dept of drDepartment" [value] ="dept.id">{{dept.departmentName}}</option>
+            </select>
+                </div>
+                <div class="invalid-feedback" *ngIf="transEventService.formEditModalTrans.get('DepartmentId').touched && transEventService.formEditModalTrans.get('DepartmentId').hasError('required')">
+                    This field is required</div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Responsible</div>
+                    </div>
+                    <select formControlName="ResponsibleId" class="form-control">
+                  <option [ngValue]="null" disabled selected>Please Select Responsible</option>
+                  <option *ngFor="let resp of drResponsible" [value] ="resp.id">{{resp.responsibleName}}</option>
+                </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Status</div>
+                    </div>
+                    <select formControlName="EventStatusId" class="form-control">
+                  <option [ngValue]="null" disabled selected>Please Select Status</option>
+                  <option *ngFor="let status of drEventStatus" [value] ="status.id">{{status.eventStatusName}}</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-link" (click)="download(transEvent.url)">{{transEvent.url}}</button>
+                <br>
+                <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)">
+            </div>
+        </form>
+
     </div>
-    <div class="form-group">
-      <input placeholder="Event Date" formControlName="EventDate" [value]= "transEvent.eventDate |date"
-        [ngClass]="{'is-invalid': transEventService.formEditModalTrans.get('EventDate').errors && transEventService.formEditModalTrans.get('EventDate').touched}"
-        class="form-control" type="text" bsDatepicker [bsConfig]="bsConfig">
-      <div class="invalid-feedback"
-        *ngIf="transEventService.formEditModalTrans.get('EventDate').touched && transEventService.formEditModalTrans.get('EventDate').hasError('required')">
-        This field is required</div>
-    </div>    
-    <div class="form-group">
-      <select formControlName="DepartmentId" class="form-control"
-        [ngClass]="{'is-invalid': transEventService.formEditModalTrans.get('DepartmentId').errors && transEventService.formEditModalTrans.get('DepartmentId').touched}">
-        <option [ngValue]="null" disabled selected>Please Select Department</option>
-        <option *ngFor="let dept of drDepartment" [value] ="dept.id">{{dept.departmentName}}</option>
-      </select>
-      <div class="invalid-feedback"
-        *ngIf="transEventService.formEditModalTrans.get('DepartmentId').touched && transEventService.formEditModalTrans.get('DepartmentId').hasError('required')">
-        This field is required</div>
-    </div>   
-    <div class="form-group">
-      <select formControlName="ResponsibleId" class="form-control">
-        <option [ngValue]="null" disabled selected>Please Select Responsible</option>
-        <option *ngFor="let resp of drResponsible" [value] ="resp.id">{{resp.responsibleName}}</option>
-      </select>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="bsModalRef.hide()" (click)="editTransEvent()">Save</button>
     </div>
-    <div class="form-group">
-      <select formControlName="EventStatusId" class="form-control">
-        <option [ngValue]="null" disabled selected>Please Select Status</option>
-        <option *ngFor="let status of drEventStatus" [value] ="status.id">{{status.eventStatusName}}</option>
-      </select>
-    </div> 
-   
-    <div class="form-group">
-      <button type="button" class="btn btn-link" (click)= "download(transEvent.url)" >{{transEvent.url}}</button>
-      <br>
-      <input type="file" #file placeholder="Choose file"  (change)= "uploadFile(file.files)">
-    </div>
-  </form> 
-  
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-default" (click)= "bsModalRef.hide()">Cancel</button>
-  <button type="button" class="btn btn-success" (click)= "bsModalRef.hide()" (click)= "editTransEvent()">Save</button>
-</div>

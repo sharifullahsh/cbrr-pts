@@ -30,6 +30,8 @@ export class TransactionMainComponent implements OnInit {
   WBSList: any[];
   projectList: any[];
   transId: number;
+  showTrnsactionDiv:boolean = false;
+  showTrnsactionEventsDiv:boolean = false;
   constructor(
     private WBSService: WBSService,
     private alertify: AlertifyService,
@@ -53,6 +55,9 @@ export class TransactionMainComponent implements OnInit {
   {
     this.transId = id;
     this.selectedRow = index;
+    if (index !== -1) {
+      this.showTrnsactionEventsDiv = true;
+    }
   }
 
   loadProjects() {
@@ -86,6 +91,7 @@ export class TransactionMainComponent implements OnInit {
       this.transactionList = res.result;
       this.pagination = res.pagination;
       this.showTransEvents(0, -1);
+      this.showTrnsactionDiv = true;
       // console.log(res);
   }, error => {
     this.alertify.error(error);

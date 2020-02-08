@@ -1,48 +1,46 @@
 <div class="container mt-3">
-  <h3 style="text-align: center;">WBS List</h3>
+    <h3 style="text-align: center;">WBS List</h3>
 
-  <form class="form-inline" #form="ngForm" (ngSubmit)="loadWBSes()" novalidate>    
-    <div class="form-group">
-      <label for="project">Select a Project: </label>
-      <select class="form-control ml-1" style="width: 250px" id="projectid"
-        [(ngModel)]="searchParams.projectId" name="projectid">
+    <form class="form-inline" #form="ngForm" (ngSubmit)="loadWBSes()" novalidate>
+        <div class="form-group">
+            <label for="project">Select a Project: </label>
+            <select class="form-control ml-1" style="width: 250px" id="projectid" [(ngModel)]="searchParams.projectId" name="projectid">
         <option [ngValue] ="null" disabled selected>Please Select Project</option>
         <option *ngFor="let project of projectList" [value]="project.id">
           {{project.projectCode}}
         </option>
       </select>
-    </div>
-    <button type="submit" class="btn btn-primary" style="margin-left:10px">View WBS List</button>   
-  </form>
-<br>
- <div class="row">
-    <div style="margin-top: 10px;">
-      <button type="button" class="btn btn-primary" style="margin-bottom:10px; display: inline-block"
-     [disabled]="!this.searchParams.projectId" (click)="openAddNewModal()">
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-left:10px">View WBS List</button>
+    </form>
+    <br>
+    <div class="row" *ngIf="showWBSListDiv">
+        <div style="margin-top: 10px;">
+            <button type="button" class="btn btn-primary" style="margin-bottom:10px; display: inline-block" [disabled]="!this.searchParams.projectId" (click)="openAddNewModal()">
         <li class="fa fa-plus"></li> Add New WBS
       </button>
+        </div>
+        <table class="table">
+            <tr>
+                <th style="width: 10%">WBS ID</th>
+                <th style="width: 10%">WBS Name</th>
+                <th style="width: 25%">Description</th>
+                <th style="width: 10%">Target</th>
+                <th style="width: 10%">Budget</th>
+                <th style="width: 10%">Unit Cost</th>
+                <th style="width: 15%"></th>
+            </tr>
+            <tr *ngFor="let WBS of WBSList">
+                <td>{{WBS.wbsId}}</td>
+                <td>{{WBS.wbsName}}</td>
+                <td>{{WBS.description}}</td>
+                <td>{{WBS.target}}</td>
+                <td>{{WBS.budget}}</td>
+                <td>{{WBS.unitCost}}</td>
+                <td class="text-sm-right"><button class="btn btn-info" style="margin-right: 4px;" (click)="editWBS(WBS)"> <li class="fa fa-pencil"></li></button>
+                    <button type="button" class="btn btn-danger btn-s" (click)="deleteWBS(WBS.id)"> <span class="fa fa-trash"></span> </button>
+                </td>
+            </tr>
+        </table>
     </div>
-    <table class="table">
-      <tr>
-        <th style="width: 10%">WBS ID</th>
-        <th style="width: 10%">WBS Name</th>
-        <th style="width: 25%">Description</th>
-        <th style="width: 10%">Target</th>
-        <th style="width: 10%">Budget</th>
-        <th style="width: 10%">Unit Cost</th>       
-        <th style="width: 15%"></th>
-      </tr>
-      <tr *ngFor="let WBS of WBSList">
-        <td>{{WBS.wbsId}}</td>
-        <td>{{WBS.wbsName}}</td>
-        <td>{{WBS.description}}</td>
-        <td>{{WBS.target}}</td>
-        <td>{{WBS.budget}}</td>
-        <td>{{WBS.unitCost}}</td>      
-        <td><button class="btn btn-info" style="margin-right: 4px;" (click)="editWBS(WBS)"> <li class="fa fa-pencil"></li></button>
-            <button type="button" class="btn btn-danger btn-s" (click)="deleteWBS(WBS.id)"> <span class="fa fa-trash"></span> </button>
-        </td>        
-      </tr>
-    </table>
-  </div>
 </div>

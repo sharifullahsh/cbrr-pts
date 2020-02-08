@@ -21,6 +21,7 @@ export class WBSComponent implements OnInit {
   user: User = JSON.parse(localStorage.getItem('user'));
   WBSList: WBS[];
   projectList: any[];
+  showWBSListDiv:boolean = false;
   constructor(private WBSService: WBSService, private alertify: AlertifyService,
               private modalService: BsModalService,
               private projectService: ProjectService, private route: ActivatedRoute) { }
@@ -36,6 +37,7 @@ loadWBSes() {
   this.WBSService.getWBSes(this.searchParams.projectId)
   .subscribe((res: WBS[]) => {
     this.WBSList = res;
+    this.showWBSListDiv = true;
     // console.log(res);
 }, error => {
   this.alertify.error(error);
