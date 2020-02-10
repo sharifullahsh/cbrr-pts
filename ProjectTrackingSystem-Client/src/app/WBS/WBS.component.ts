@@ -20,6 +20,7 @@ export class WBSComponent implements OnInit {
   searchParams: any = {};
   user: User = JSON.parse(localStorage.getItem('user'));
   WBSList: WBS[];
+  FilteredWBSList: WBS[];
   projectList: any[];
   showWBSListDiv:boolean = false;
   constructor(private WBSService: WBSService, private alertify: AlertifyService,
@@ -37,6 +38,7 @@ loadWBSes() {
   this.WBSService.getWBSes(this.searchParams.projectId)
   .subscribe((res: WBS[]) => {
     this.WBSList = res;
+    this.FilteredWBSList = res;
     this.showWBSListDiv = true;
     // console.log(res);
 }, error => {
@@ -84,5 +86,29 @@ editWBS(wbs) {
       this.alertify.error('Failed to delete the WBS');
     });
   });
+}
+searchWBS(){
+  let _WBSId = this.WBSService.searchWBSForm.get('WBSId').value;
+  let _WBSName = this.WBSService.searchWBSForm.get('WBSName').value;
+  let _Description = this.WBSService.searchWBSForm.get('Description').value;
+  let _Budget = this.WBSService.searchWBSForm.get('Budget').value;
+  if (_WBSId) {
+    this.FilteredWBSList = this.WBSList.filter(w => w.wbsId == _WBSId);
+  }
+  if (_WBSName) {
+    this.FilteredWBSList = this.WBSList.filter(w =>
+       w.wbsName.toLowerCase().indexOf(_WBSName.toLowerCase()) !== -1);
+  }
+  if (_Description) {
+    this.FilteredWBSList = this.WBSList.filter(w =>
+       w.description.toLowerCase().indexOf(_Description.toLowerCase()) !== -1);
+  }
+  if (_Budget) {
+    this.FilteredWBSList = this.WBSList.filter(w => w.budget >= _Budget);
+  }
+}
+resetSearchWBS(){
+  this.FilteredWBSList = this.WBSList;
+  this.WBSService.searchWBSForm.reset();
 }
 }

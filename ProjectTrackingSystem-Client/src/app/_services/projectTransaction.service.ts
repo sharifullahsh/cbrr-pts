@@ -40,6 +40,13 @@ export class ProjectTransactionService {
     ExchangeRate: [''],
     ProvinceId: ['']
   });
+  searchFormModalTrans = this.fb.group({
+    TransactionTypeId: '',
+    FromDate: '',
+    ToDate: '',
+    Amount: '',
+    ProvinceId: ''
+    });
   addTrans(wbsId: number | string) {
     const formData = {
       transactionTypeId: this.formModalTrans.value.TransactionTypeId,
@@ -70,6 +77,24 @@ getTransactions(wbsId: string | number, page?, itemsPerPage?): Observable<Pagina
       params = params.append('pageNumber', page);
       params = params.append('pageSize', itemsPerPage);
     }
+  const transactionTypeId = this.searchFormModalTrans.get('TransactionTypeId').value;
+  const fromDate = this.searchFormModalTrans.get('FromDate').value;
+  const toDate = this.searchFormModalTrans.get('ToDate').value;
+  const provinceId = this.searchFormModalTrans.get('ProvinceId').value;
+
+  if (transactionTypeId) {
+      params = params.append('TransactionTypeId', transactionTypeId);
+    }
+  if (fromDate) {
+      params = params.append('FromDate', fromDate);
+    }
+  if (toDate) {
+      params = params.append('ToDate', toDate);
+    }
+  if (provinceId) {
+      params = params.append('ProvinceId', provinceId);
+    }
+
   return this.http.get<Transaction[]>(this.baseUrl + 'ProjectTransaction/GetTransactions/' + wbsId, { observe: 'response', params})
     .pipe(
       map(response => {

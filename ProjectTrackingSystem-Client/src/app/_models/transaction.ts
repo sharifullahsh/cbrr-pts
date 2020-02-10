@@ -7,6 +7,7 @@ export interface Transaction {
     exchangeRate: number;
     wbsId: number;
     provinceId: number;
+    provinceName: string;
     amount: number;
     wbsName: string;
     currencyId: number;

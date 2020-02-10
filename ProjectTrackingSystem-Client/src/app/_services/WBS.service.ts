@@ -35,6 +35,12 @@ export class WBSService {
     UnitCost: [''],
     ProjectId: [''],
   });
+  searchWBSForm = this.fb.group({
+    WBSId: '',
+    WBSName: '',
+    Description: '',
+    Budget: ''
+  });
 
   getWBSes(id: string | number) {
     return this.http.get(this.baseUrl + 'WBS/GetWBSes/' + id);

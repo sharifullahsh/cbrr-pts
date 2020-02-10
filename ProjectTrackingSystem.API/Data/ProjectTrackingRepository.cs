@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using ProjectTrackingSystem.API.Dtos;
 using ProjectTrackingSystem.API.Helpers;
 using ProjectTrackingSystem.API.Models;
-
+using System;
+using System.Globalization;
 namespace ProjectTrackingSystem.API.Data {
     public class ProjectTrackingRepository : IProjectTrackingRepository {
         private readonly DataContext _context;
@@ -92,7 +93,27 @@ namespace ProjectTrackingSystem.API.Data {
                     TransactionType = transaction.TransactionType.TransactionTypeName
 
             });
-
+            
+            if (transParams.TransactionTypeId != null)
+            {
+                res = res.Where(c => c.TransactionTypeId == transParams.TransactionTypeId);
+            }
+            if (!string.IsNullOrWhiteSpace(transParams.FromDate))
+            {
+                var strDateTime =  transParams.FromDate.Substring(4, 20);
+                DateTime fromDate = DateTime.Parse(strDateTime);
+                res = res.Where(c => c.TransactionDate >= fromDate);
+            }
+            if (!string.IsNullOrWhiteSpace(transParams.ToDate))
+            {
+                var strDateTime =  transParams.ToDate.Substring(4, 20);
+                DateTime toDate = DateTime.Parse(strDateTime);
+                res = res.Where(c => c.TransactionDate <= toDate);
+            }
+            if (transParams.ProvinceId != null)
+            {
+                res = res.Where(c => c.ProvinceId == transParams.ProvinceId);
+            }
             return await PagedList<TransactionsForListDto>.CreateAsync (res, transParams.PageNumber, transParams.PageSize);
         }
 

@@ -32,6 +32,9 @@ export class TransactionMainComponent implements OnInit {
   transId: number;
   showTrnsactionDiv:boolean = false;
   showTrnsactionEventsDiv:boolean = false;
+  drTransactionType: any;
+  drProvince: any;
+  trans: Transaction;
   constructor(
     private WBSService: WBSService,
     private alertify: AlertifyService,
@@ -42,6 +45,8 @@ export class TransactionMainComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.loadProjects();
+    this.getTransTypes();
+    this.getProvinces();
     this.searchParams.projectId = null;
     this.searchParams.wbsId = null;
     this.route.data.subscribe(data => {
@@ -50,7 +55,30 @@ export class TransactionMainComponent implements OnInit {
       this.transId = 0;
     });
     this.pagination.itemsPerPage = 5;
+    this.projTransService.searchFormModalTrans.reset();
   }
+  getTransTypes() {
+    this.projTransService.getTransTypes().subscribe(
+      response => {
+        this.drTransactionType = response;
+        // console.log(this.drTransactionType);
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
+  }
+  getProvinces() {
+    this.projTransService.getProvinces().subscribe(
+      response => {
+        this.drProvince = response;
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
+  }
+
   showTransEvents(id, index)
   {
     this.transId = id;
@@ -92,6 +120,7 @@ export class TransactionMainComponent implements OnInit {
       this.pagination = res.pagination;
       this.showTransEvents(0, -1);
       this.showTrnsactionDiv = true;
+
       // console.log(res);
   }, error => {
     this.alertify.error(error);
@@ -130,5 +159,13 @@ export class TransactionMainComponent implements OnInit {
   }
 
    deleteTransaction(id) { }
+
+   searchTransaction(){
+    this.loadTrans();
+   }
+   resetSearchTransaction(){
+        this.projTransService.searchFormModalTrans.reset();
+        this.loadTrans();
+   }
 
 }

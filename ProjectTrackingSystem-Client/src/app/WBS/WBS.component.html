@@ -14,12 +14,36 @@
         <button type="submit" class="btn btn-primary" style="margin-left:10px">View WBS List</button>
     </form>
     <br>
-    <div class="row" *ngIf="showWBSListDiv">
+    <div *ngIf="showWBSListDiv">
         <div style="margin-top: 10px;">
             <button type="button" class="btn btn-primary" style="margin-bottom:10px; display: inline-block" [disabled]="!this.searchParams.projectId" (click)="openAddNewModal()">
         <li class="fa fa-plus"></li> Add New WBS
       </button>
         </div>
+
+        <form #projectForm="ngForm" [formGroup]="WBSService.searchWBSForm" id="filterWbsForm" autocomplete="off">
+            <div class="form-row">
+                <div class="form-group col">
+                    <input placeholder="WBS ID " formControlName="WBSId" class="form-control">
+                </div>
+                <div class="form-group col">
+                    <input placeholder="WBS Name" formControlName="WBSName" class="form-control">
+                </div>
+                <div class="form-group col">
+                    <input placeholder="Description" formControlName="Description" class="form-control" type="text">
+                </div>
+                <div class="form-group col">
+                    <input placeholder="Budget greater than or equal to" formControlName="Budget" class="form-control">
+                </div>
+                <div class="form-group col">
+                    <button type="button" class="btn btn-success mr-1" (click)="searchWBS()">Search</button>
+                    <button type="button" class="btn btn-default mr-1" (click)="resetSearchWBS()">Reset</button>
+                </div>
+
+            </div>
+
+        </form>
+
         <table class="table">
             <tr>
                 <th style="width: 10%">WBS ID</th>
@@ -30,7 +54,7 @@
                 <th style="width: 10%">Unit Cost</th>
                 <th style="width: 15%"></th>
             </tr>
-            <tr *ngFor="let WBS of WBSList">
+            <tr *ngFor="let WBS of FilteredWBSList">
                 <td>{{WBS.wbsId}}</td>
                 <td>{{WBS.wbsName}}</td>
                 <td>{{WBS.description}}</td>

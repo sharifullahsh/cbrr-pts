@@ -1,6 +1,5 @@
 <div class="container mt-3">
     <h3 style="text-align: center;">Project Transactions</h3>
-
     <form class="form-inline" #form="ngForm" (ngSubmit)="loadTrans()" novalidate>
         <div class="form-group">
             <select class="form-control ml-1" style="width: 250px" id="projectid" [(ngModel)]="searchParams.projectId" name="projectid" (change)="loadWBSes();">
@@ -19,12 +18,39 @@
         <button type="submit" class="btn btn-primary" style="margin-left:10px" [disabled]="!this.searchParams.wbsId">View Transactions</button>
     </form>
     <br>
-    <div class="row" *ngIf="showTrnsactionDiv">
+    <div *ngIf="showTrnsactionDiv">
         <div style="margin-top: 10px;">
             <button type="button" class="btn btn-primary" style="margin-bottom:10px; display: inline-block" (click)="openAddModal()" [disabled]="!this.searchParams.wbsId">
         <li class="fa fa-plus"></li> Add New
       </button>
         </div>
+        <form #projectForm="ngForm" [formGroup]="projTransService.searchFormModalTrans" id="searchTransForm" autocomplete="off">
+            <div class="form-row">
+                <div class="form-group col">
+                    <select formControlName="TransactionTypeId" class="form-control">
+                <option [ngValue]="null" disabled selected>Please Select Transaction Type</option>
+                <option *ngFor="let transType of drTransactionType" [value]="transType.id">{{transType.transactionTypeName}}
+                </option>
+              </select>
+                </div>
+                <div class="form-group col">
+                    <input placeholder=" From Date" formControlName="FromDate" class="form-control" type="text" bsDatepicker [bsConfig]="bsConfig">
+                </div>
+                <div class="form-group col">
+                    <input placeholder=" To Date" formControlName="ToDate" class="form-control" type="text" bsDatepicker [bsConfig]="bsConfig">
+                </div>
+                <div class="form-group col">
+                    <select formControlName="ProvinceId" class="form-control">
+                <option [ngValue]="null" disabled selected>Please Select Province</option>
+                <option *ngFor="let province of drProvince" [value]="province.id">{{province.provinceName}}</option>
+              </select>
+                </div>
+                <div class="form-group col">
+                    <button type="button" class="btn btn-success mr-1" (click)="searchTransaction()">Search</button>
+                    <button type="button" class="btn btn-default mr-1" (click)="resetSearchTransaction()">Reset</button>
+                </div>
+            </div>
+        </form>
         <table class="table">
             <tr>
                 <th style="width: 20%">Transaction Type</th>
@@ -33,6 +59,7 @@
                 <th style="width: 7%">Amount</th>
                 <th style="width: 7%">Currency</th>
                 <th style="width: 10%">Exchange Rate</th>
+                <th style="width: 10%">Province Name</th>
                 <th style="width: 10%"></th>
             </tr>
             <tr *ngFor="let trans of transactionList; let i = index" (click)="showTransEvents(trans.id, i)" [class.active]="i == selectedRow">
@@ -42,6 +69,7 @@
                 <td>{{trans.amount}}</td>
                 <td>{{trans.currencyName}}</td>
                 <td>{{trans.exchangeRate}}</td>
+                <td>{{trans.provinceName}}</td>
                 <td class="text-sm-right">
                     <button class="btn btn-info" style="margin-right: 4px;" (click)="editTransaction(trans)"> <li class="fa fa-pencil"></li></button>
                     <button type="button" class="btn btn-danger btn-s" (click)="showTransEvents(trans.id)"> <span class="fa fa-trash"></span> </button>
