@@ -1,3 +1,4 @@
+import { RegisterUser } from './../../_models/RegisterUser';
 import { UserEditModalComponent } from './../Modals/UserEditModal/UserEditModal.component';
 import { UserAddModalComponent } from './../Modals/UserAddModal/UserAddModal.component';
 import { ProjectService } from './../../_services/project.service';
@@ -22,8 +23,11 @@ export class AdminMainComponent implements OnInit {
   bsModalRef: BsModalRef;
   selectedRow: number;
   searchParams: any = {};
-  users: any[];
+  users: RegisterUser[];
+  FilteredUsersList: RegisterUser[];
   drProgrammes: any;
+  drProvince: any;
+  drRoles: any;
   constructor(
     private http: HttpClient,
     private alertify: AlertifyService,
@@ -35,12 +39,15 @@ export class AdminMainComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
-    //this.projTransService.searchFormModalTrans.reset();
+    this.getProvinces();
+    this.getProgrammes();
+    this.getAllRoles();
+    this.userService.searchFormModalUser.reset();
   }
   getUsers() {
     this.userService.getUsers().subscribe((users: any) => {
       this.users = users;
-      console.log(">>>>>>>>>>"+ JSON.stringify(users));
+      this.FilteredUsersList = users;
     }, error => {
       console.log(error);
     });
@@ -91,6 +98,50 @@ export class AdminMainComponent implements OnInit {
         this.alertify.error('Failed to delete the User');
       });
     });
+  }
+  getProvinces() {
+    this.userService.getProvinces().subscribe(
+      response => {
+        this.drProvince = response;
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
+  }
+  getAllRoles() {
+    this.userService.getAllRoles().subscribe(
+      response => {
+        this.drRoles = response;
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
+  }
+  searchUser() {
+    this.FilteredUsersList = this.users;
+    const programmeId = this.userService.searchFormModalUser.get('ProgrammeId').value;
+    const userName = this.userService.searchFormModalUser.get('Name').value;
+    const roleId = this.userService.searchFormModalUser.get('RoleId').value;
+    const provinceId = this.userService.searchFormModalUser.get('ProvinceId').value;
+    if (programmeId) {
+      this.FilteredUsersList = this.FilteredUsersList.filter(u => u.programId == programmeId);
+    }
+    if (userName) {
+      this.FilteredUsersList = this.FilteredUsersList.filter(u =>
+         u.userName.toLowerCase().indexOf(userName.toLowerCase()) !== -1);
+    }
+    if (provinceId) {
+      this.FilteredUsersList = this.FilteredUsersList.filter(u => u.provinceId == provinceId);
+    }
+    if (roleId) {
+      this.FilteredUsersList = this.FilteredUsersList.filter(u => u.roleId == roleId);
+    }
+  }
+  resetSearchUser() {
+    this.FilteredUsersList = this.users;
+    this.userService.searchFormModalUser.reset();
   }
 
 }

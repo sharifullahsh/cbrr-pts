@@ -8,6 +8,7 @@ namespace ProjectTrackingSystem.API.Helpers {
             CreateMap<User, UserForDetailedDto> ();
             CreateMap<User, UserForListDto> ();
             CreateMap<UserForRegisterDto, User> ();
+            CreateMap<UserForEditRegisterDto, User> ();
             CreateMap<Programme, ProgrammeForDropdownDto> ();
             CreateMap<Currency, CurrencyForDropdownDto> ();
             CreateMap<TransactionType, TransTypeForDropdownDto> ();

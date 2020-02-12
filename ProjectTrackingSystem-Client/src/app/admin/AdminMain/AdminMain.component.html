@@ -20,34 +20,34 @@
                 <div class="form-group col">
                     <select formControlName="RoleId" class="form-control">
                         <option [ngValue] ="null" disabled selected>Please Select Role</option>
-                        <option *ngFor="let role of drRoles" [value]="role.id">{{role.roleName}}</option>
+                        <option *ngFor="let role of drRoles" [value]="role.id">{{role.name}}</option>
                       </select>
                 </div>
-                <!-- <div class="form-group col">
+                <div class="form-group col">
                     <select formControlName="ProvinceId" class="form-control">
                 <option [ngValue]="null" disabled selected>Please Select Province</option>
                 <option *ngFor="let province of drProvince" [value]="province.id">{{province.provinceName}}</option>
               </select>
-                </div> -->
+                </div>
                 <div class="form-group col">
-                    <button type="button" class="btn btn-success mr-1" (click)="searchTransaction()">Search</button>
-                    <button type="button" class="btn btn-default mr-1" (click)="resetSearchTransaction()">Reset</button>
+                    <button type="button" class="btn btn-success mr-1" (click)="searchUser()">Search</button>
+                    <button type="button" class="btn btn-default mr-1" (click)="resetSearchUser()">Reset</button>
                 </div>
             </div>
         </form>
         <table class="table">
             <tr>
-                <th style="width: 20%">Programme Name</th>
-                <th style="width: 25%">User Name</th>
-                <th style="width: 7%">Role</th>
-                <th style="width: 10%"></th>
+                <th style="width: 30%">Programme Name</th>
+                <th style="width: 20%">User Name</th>
+                <th style="width: 15%">Role</th>
+                <th style="width: 20%">Province</th>
+                <th style="width: 20%"></th>
             </tr>
-            <tr *ngFor="let user of users;">
+            <tr *ngFor="let user of FilteredUsersList;">
                 <td>{{user.programmeName}}</td>
                 <td>{{user.userName}}</td>
-                <td>
-                    <span *ngFor="let role of user.roles"> {{role}}</span>
-                </td>
+                <td> {{user.roleName}}</td>
+                <td>{{user.provinceName}}</td>
                 <td class="text-sm-right">
                     <button class="btn btn-info" style="margin-right: 4px;" (click)="editUser(user)"> <li class="fa fa-pencil"></li></button>
                     <button type="button" class="btn btn-danger btn-s" (click)="deleteUser(user.id)"> <span class="fa fa-trash"></span> </button>

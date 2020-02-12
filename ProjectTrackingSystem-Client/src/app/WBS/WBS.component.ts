@@ -93,18 +93,18 @@ searchWBS(){
   let _Description = this.WBSService.searchWBSForm.get('Description').value;
   let _Budget = this.WBSService.searchWBSForm.get('Budget').value;
   if (_WBSId) {
-    this.FilteredWBSList = this.WBSList.filter(w => w.wbsId == _WBSId);
+    this.FilteredWBSList = this.FilteredWBSList.filter(w => w.wbsId == _WBSId);
   }
   if (_WBSName) {
-    this.FilteredWBSList = this.WBSList.filter(w =>
+    this.FilteredWBSList = this.FilteredWBSList.filter(w =>
        w.wbsName.toLowerCase().indexOf(_WBSName.toLowerCase()) !== -1);
   }
   if (_Description) {
-    this.FilteredWBSList = this.WBSList.filter(w =>
+    this.FilteredWBSList = this.FilteredWBSList.filter(w =>
        w.description.toLowerCase().indexOf(_Description.toLowerCase()) !== -1);
   }
   if (_Budget) {
-    this.FilteredWBSList = this.WBSList.filter(w => w.budget >= _Budget);
+    this.FilteredWBSList = this.FilteredWBSList.filter(w => w.budget >= _Budget);
   }
 }
 resetSearchWBS(){

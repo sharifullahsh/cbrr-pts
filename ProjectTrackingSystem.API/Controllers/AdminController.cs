@@ -58,12 +58,16 @@ namespace ProjectTrackingSystem.API.Controllers
                                   {
                                       Id = user.Id,
                                       UserName = user.UserName,
+                                      user.ProgramId,
                                       ProgrammeName = _context.Programmes.Where(p=>p.Id == user.ProgramId).Select(p=>p.ProgrammeName).FirstOrDefault(),
-                                      Roles = (from userRole in user.UserRoles
+                                      user.ProvinceId,
+                                      ProvinceName = _context.Provinces.Where(p=>p.Id == user.ProvinceId).Select(p=>p.ProvinceName).FirstOrDefault(),
+                                      RoleId = _context.UserRoles.Where(r=> r.UserId == user.Id).Select(u=>u.RoleId).FirstOrDefault(),
+                                      RoleName = (from userRole in user.UserRoles
                                                join role in _context.Roles
                                                on userRole.RoleId
                                                equals role.Id
-                                               select role.Name).ToList()
+                                               select role.Name).FirstOrDefault()
                                   })
                                   //.Where(User=>User.UserName != "Admin")
                                   .ToListAsync();

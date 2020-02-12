@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 
 namespace ProjectTrackingSystem.API.Controllers
 {
@@ -57,6 +58,29 @@ namespace ProjectTrackingSystem.API.Controllers
                  return Ok();
                 // return CreatedAtRoute("GetUser", 
                 //     new { controller = "Users", id = userToCreate.Id }, userToReturn);
+            }
+
+            return BadRequest(result.Errors.ToString());
+        }
+
+        [HttpPost("editUser")]
+        public async Task<IActionResult> EditUser(UserForEditRegisterDto userEditDto)
+        {
+            var user = await _userManager.FindByIdAsync(userEditDto.Id.ToString());
+            user.ProgramId = userEditDto.ProgramId;
+            user.ProvinceId = userEditDto.ProvinceId;
+            user.UserName = userEditDto.Username;
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                 var editedUser = _userManager.FindByIdAsync(userEditDto.Id.ToString()).Result;
+                var preRoles = await _roleManager.Roles.Select(r=>r.Name).ToListAsync();
+                await _userManager.RemoveFromRolesAsync(editedUser, preRoles);
+                var role = _roleManager.FindByIdAsync(userEditDto.RoleId).Result;
+               
+                 _userManager.AddToRoleAsync(editedUser,role.Name).Wait();
+                 return Ok();
             }
 
             return BadRequest(result.Errors.ToString());
