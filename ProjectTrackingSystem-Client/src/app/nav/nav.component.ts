@@ -40,5 +40,8 @@ export class NavComponent implements OnInit {
     this.alertify.message('logged out');
     this.router.navigate(['/home']);
   }
+  get isAdmin() {
+    return this.authService.roleMatch(['Admin']);
+  }
 
 }

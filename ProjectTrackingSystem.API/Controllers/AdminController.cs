@@ -18,12 +18,17 @@ namespace ProjectTrackingSystem.API.Controllers
     {
          private readonly DataContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
          public AdminController(
             DataContext context,
-            UserManager<User> userManager)
+            RoleManager<Role> roleMgr,
+            UserManager<User> userManager
+            
+            )
         {
-            _userManager = userManager;            
-            _context = context;        
+            _userManager = userManager;          
+            _context = context;       
+            _roleManager = roleMgr; 
         }
         [Authorize(Roles = "Admin")]
         [HttpGet("usersWithRoles")]
@@ -43,6 +48,35 @@ namespace ProjectTrackingSystem.API.Controllers
                                   }).ToListAsync();
             return Ok(userList);
         }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("allUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var userList = await (from user in _context.Users
+                                  orderby user.UserName
+                                  select new
+                                  {
+                                      Id = user.Id,
+                                      UserName = user.UserName,
+                                      ProgrammeName = _context.Programmes.Where(p=>p.Id == user.ProgramId).Select(p=>p.ProgrammeName).FirstOrDefault(),
+                                      Roles = (from userRole in user.UserRoles
+                                               join role in _context.Roles
+                                               on userRole.RoleId
+                                               equals role.Id
+                                               select role.Name).ToList()
+                                  })
+                                  //.Where(User=>User.UserName != "Admin")
+                                  .ToListAsync();
+            return Ok(userList);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("getAllRoles")]
+        public async Task<IActionResult> GetAllRoles()
+        {
+            var roles = await _roleManager.Roles.Select(r=>new {r.Id, r.Name}).ToListAsync();
+            return Ok(roles);
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpPost("editRoles/{userName}")]
         public async Task<IActionResult> EditRoles(string userName, RoleEditDto roleEditDto)

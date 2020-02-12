@@ -26,34 +26,40 @@ namespace ProjectTrackingSystem.API.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-
+        private readonly RoleManager<Role> _roleManager;
         public AuthController(IConfiguration config,
             IMapper mapper,
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+             RoleManager<Role> roleMgr)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _config = config;
+            _roleManager = roleMgr; 
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
+            var role = _roleManager.FindByIdAsync(userForRegisterDto.RoleId).Result;
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
 
-            var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+            IdentityResult result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
 
-            var userToReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
+            //var userToReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
 
             if (result.Succeeded)
             {
-                return CreatedAtRoute("GetUser", 
-                    new { controller = "Users", id = userToCreate.Id }, userToReturn);
+                var createdUser = _userManager.FindByNameAsync(userForRegisterDto.Username).Result;
+                 _userManager.AddToRoleAsync(createdUser,role.Name).Wait();
+                 return Ok();
+                // return CreatedAtRoute("GetUser", 
+                //     new { controller = "Users", id = userToCreate.Id }, userToReturn);
             }
 
-            return BadRequest(result.Errors);
+            return BadRequest(result.Errors.ToString());
         }
 
         [HttpPost("login")]

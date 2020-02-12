@@ -1,3 +1,7 @@
+import { UserEditModalComponent } from './admin/Modals/UserEditModal/UserEditModal.component';
+import { UserAddModalComponent } from './admin/Modals/UserAddModal/UserAddModal.component';
+import { UserService } from './_services/user.service';
+import { AdminMainComponent } from './admin/AdminMain/AdminMain.component';
 import { UploadComponent } from './ProjectTransactions/Upload/Upload.component';
 import { TransEventEditModalComponent } from './ProjectTransactions/Modals/TransEventEditModal/TransEventEditModal.component';
 import { TransEventAddModalComponent } from './ProjectTransactions/Modals/TransEventAddModal/TransEventAddModal.component';
@@ -58,7 +62,11 @@ export function tokenGetter() {
       TransactionEventsComponent,
       TransEventAddModalComponent,
       TransEventEditModalComponent,
-      UploadComponent
+      UploadComponent,
+      AdminMainComponent,
+      AdminMainComponent,
+      UserAddModalComponent,
+      UserEditModalComponent
    ],
    imports: [
       BrowserModule,
@@ -96,7 +104,8 @@ export function tokenGetter() {
     WBSService,
     ProjectTransactionService,
     TransactionResolver,
-    TransactionEventsService
+    TransactionEventsService,
+    UserService
   ],
   entryComponents: [
     ProjectAddModalComponent,
@@ -106,7 +115,9 @@ export function tokenGetter() {
     TransEditModalComponent,
     TransAddModalComponent,
     TransEventAddModalComponent,
-    TransEventEditModalComponent
+    TransEventEditModalComponent,
+    UserAddModalComponent,
+    UserEditModalComponent
   ],
   bootstrap: [AppComponent]
 })

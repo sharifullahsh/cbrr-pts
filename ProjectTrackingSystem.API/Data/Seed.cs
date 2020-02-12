@@ -47,7 +47,7 @@ namespace ProjectTrackingSystem.API.Data
                 {
                     var admin = userManager.FindByNameAsync("Admin").Result;
                     userManager.AddToRolesAsync(admin, new[] {"Admin"}).Wait();
-                }
+                } 
             }
         }
     }
