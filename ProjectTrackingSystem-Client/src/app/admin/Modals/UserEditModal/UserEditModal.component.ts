@@ -63,7 +63,6 @@ export class UserEditModalComponent implements OnInit {
         const selectedOption = this.drProgrammes.filter(
           programme => programme.programmeName === this.user.programmeName
         )[0];
-        console.log("selectedOption is >>>>>>>>>>"+ JSON.stringify(selectedOption));
         this.userService.formEditModalUser
           .get('ProgramId')
           .setValue(selectedOption.id);

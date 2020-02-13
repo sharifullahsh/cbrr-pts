@@ -6,13 +6,14 @@ import {Routes} from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { WBSComponent } from './WBS/WBS.component';
+import { AdminGuard } from './_guards/admin.guard';
 
 export const appRoutes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'project', component: ProjectsComponent},
     {path: 'WBS', component: WBSComponent},
     {path: 'transactions', component: TransactionMainComponent, resolve: {transactions: TransactionResolver}},
-    {path: 'admin', component: AdminMainComponent},
+    {path: 'admin', component: AdminMainComponent, canActivate: [AdminGuard]},
     {
         path: '',
         runGuardsAndResolvers: 'always',
