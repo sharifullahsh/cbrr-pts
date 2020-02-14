@@ -45,28 +45,25 @@ export class UserService {
   getUser(id: number) {
     return  this.http.get(this.baseUrl + 'Admin/getUser/' + id);
   }
-  getProgrammes() {
-    return  this.http.get(this.baseUrl + 'Lookup/GetProgrammes');
-  }
   getAllRoles() {
     return  this.http.get(this.baseUrl + 'Admin/getAllRoles');
   }
-  getProvinces() {
-    return this.http.get(this.baseUrl + 'lookup/GetProvinces');
-  }
-  registerUser(user: RegisterUser) {
-    return this.http.post(this.baseUrl + 'Auth/register', user);
-  }
   
+  registerUser(user: RegisterUser) {
+    return this.http.post(this.baseUrl + 'Admin/register', user);
+  }
   editUser(user: RegisterUser) {
-    return this.http.post(this.baseUrl + 'Auth/editUser', user);
+    return this.http.post(this.baseUrl + 'Admin/editUser', user);
    }
    editPassword(passworChangeInfo: any) {
-    return this.http.post(this.baseUrl + 'Auth/changePassword', passworChangeInfo);
+    return this.http.post(this.baseUrl + 'Admin/changePassword', passworChangeInfo);
    }
-
 
   deleteUser(id: string | number) {
     return  this.http.post(this.baseUrl + 'Admin/RemoveUser/' + id, {});
   }
+  resetPassword(id: string | number) {
+    return  this.http.post(this.baseUrl + 'Admin/resetPasswrod/' + id, {});
+  }
+  
 }

@@ -1,3 +1,4 @@
+import { GeneralService } from './../../_services/general.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BsDatepickerConfig, BsModalRef } from 'ngx-bootstrap';
 import { AlertifyService } from 'src/app/_services/alertify.service';
@@ -26,7 +27,8 @@ export class ProjectEditModalComponent implements OnInit {
   constructor(
     public bsModalRef: BsModalRef,
     private alertify: AlertifyService,
-    public projectService: ProjectService
+    public projectService: ProjectService,
+    public generalService: GeneralService
   ) {}
 
   ngOnInit() {
@@ -59,7 +61,7 @@ export class ProjectEditModalComponent implements OnInit {
       .setValue(this.project.endDate);
   }
   getProgrammes() {
-    this.projectService.getProgrammes().subscribe(
+    this.generalService.getProgrammes().subscribe(
       response => {
         this.drProgrammes = response;
         const selectedOption = this.drProgrammes.filter(

@@ -1,3 +1,4 @@
+import { GeneralService } from './../../../_services/general.service';
 import { ProjectService } from './../../../_services/project.service';
 import { ProjectTransactionService } from './../../../_services/projectTransaction.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
@@ -27,7 +28,8 @@ export class TransAddModalComponent implements OnInit {
   constructor(public bsModalRef: BsModalRef,
               private alertify: AlertifyService,
               private projectService: ProjectService,
-              public transService: ProjectTransactionService) { }
+              public transService: ProjectTransactionService,
+              public generalService: GeneralService) { }
 
   ngOnInit() {
     this.transService.formModalTrans.reset();
@@ -46,7 +48,7 @@ export class TransAddModalComponent implements OnInit {
     );
   }
   getProvinces() {
-    this.transService.getProvinces().subscribe(
+    this.generalService.getProvinces().subscribe(
       response => {
         this.drProvince = response;
       },

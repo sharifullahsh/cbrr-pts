@@ -1,3 +1,4 @@
+import { GeneralService } from './../../../_services/general.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AlertifyService } from 'src/app/_services/alertify.service';
@@ -26,7 +27,8 @@ export class UserAddModalComponent implements OnInit {
     public bsModalRef: BsModalRef,
     private alertify: AlertifyService,
     private userService: UserService,
-    private authServic: AuthService
+    private authServic: AuthService,
+    private generalService: GeneralService
   ) {}
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class UserAddModalComponent implements OnInit {
     this.getProvinces();
   }
   getProgrammes() {
-    this.userService.getProgrammes().subscribe(
+    this.generalService.getProgrammes().subscribe(
       response => {
         this.drProgrammes = response;
       },
@@ -68,7 +70,7 @@ export class UserAddModalComponent implements OnInit {
     );
   }
   getProvinces() {
-    this.userService.getProvinces().subscribe(
+    this.generalService.getProvinces().subscribe(
       response => {
         this.drProvince = response;
       },

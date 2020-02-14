@@ -1,3 +1,4 @@
+import { GeneralService } from './_services/general.service';
 import { ChangePassModalComponent } from './profile/Modals/ChangePassModal/ChangePassModal.component';
 import { UserEditModalComponent } from './admin/Modals/UserEditModal/UserEditModal.component';
 import { UserAddModalComponent } from './admin/Modals/UserAddModal/UserAddModal.component';
@@ -109,7 +110,8 @@ export function tokenGetter() {
     ProjectTransactionService,
     TransactionResolver,
     TransactionEventsService,
-    UserService
+    UserService,
+    GeneralService
   ],
   entryComponents: [
     ProjectAddModalComponent,

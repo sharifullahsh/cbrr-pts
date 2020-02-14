@@ -65,6 +65,9 @@ export class TransactionEventsService {
       });
    // }
   }
+  getDepartments() {
+    return this.http.get(this.baseUrl + 'Lookup/GetDepartments');
+  }
   getTransEvents(id: string | number) {
     return this.http.get(
       this.baseUrl + 'ProjectTransaction/GetProjectTransactionEvents/' + id
@@ -83,10 +86,6 @@ export class TransactionEventsService {
       this.baseUrl + 'ProjectTransaction/RemoveTransactionEven/' + id,
       {}
     );
-  }
-
-  getDepartments() {
-    return this.http.get(this.baseUrl + 'Lookup/GetDepartments');
   }
 
   getEventTypes() {

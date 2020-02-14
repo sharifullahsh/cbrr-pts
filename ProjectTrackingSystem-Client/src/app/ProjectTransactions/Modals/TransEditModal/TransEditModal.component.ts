@@ -1,3 +1,4 @@
+import { GeneralService } from './../../../_services/general.service';
 import { Transaction } from './../../../_models/transaction';
 import { ProjectTransactionService } from './../../../_services/projectTransaction.service';
 import { ProjectService } from './../../../_services/project.service';
@@ -27,7 +28,8 @@ export class TransEditModalComponent implements OnInit {
     public bsModalRef: BsModalRef,
     private alertify: AlertifyService,
     private projectService: ProjectService,
-    public transService: ProjectTransactionService
+    public transService: ProjectTransactionService,
+    public generalService: GeneralService
   ) {}
 
   ngOnInit() {
@@ -53,7 +55,7 @@ export class TransEditModalComponent implements OnInit {
     );
   }
   getProvinces() {
-    this.transService.getProvinces().subscribe(
+    this.generalService.getProvinces().subscribe(
       response => {
         this.drProvince = response;
         const selectedProvince = this.drProvince.filter(

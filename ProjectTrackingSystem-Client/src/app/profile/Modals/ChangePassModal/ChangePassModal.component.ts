@@ -13,7 +13,6 @@ import { AuthService } from 'src/app/_services/auth.service';
   styleUrls: ['./ChangePassModal.component.css']
 })
 export class ChangePassModalComponent implements OnInit {
-  @Output() updateTable = new EventEmitter();
   title: string;
   closeBtnName: string;
   response: any;

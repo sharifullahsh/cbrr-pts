@@ -1,3 +1,4 @@
+import { GeneralService } from './../../_services/general.service';
 import { Pagination, PaginatedResult } from './../../_models/pagination';
 import { ProjectTransactionService } from './../../_services/projectTransaction.service';
 import { Transaction } from './../../_models/transaction';
@@ -41,7 +42,8 @@ export class TransactionMainComponent implements OnInit {
     private modalService: BsModalService,
     private projectService: ProjectService,
     private route: ActivatedRoute,
-    private projTransService: ProjectTransactionService
+    private projTransService: ProjectTransactionService,
+    private generalService: GeneralService
   ) {}
   ngOnInit() {
     this.loadProjects();
@@ -68,7 +70,7 @@ export class TransactionMainComponent implements OnInit {
     );
   }
   getProvinces() {
-    this.projTransService.getProvinces().subscribe(
+    this.generalService.getProvinces().subscribe(
       response => {
         this.drProvince = response;
       },

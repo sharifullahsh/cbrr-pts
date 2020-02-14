@@ -36,8 +36,6 @@ bsModalRef: BsModalRef;
     
     this.bsModalRef = this.modalService.show(ChangePassModalComponent, {initialState});
     this.bsModalRef.content.closeBtnName = 'Close';
-    this.bsModalRef.content.updateTable.subscribe((values) => {
-      });
   }
 
 }

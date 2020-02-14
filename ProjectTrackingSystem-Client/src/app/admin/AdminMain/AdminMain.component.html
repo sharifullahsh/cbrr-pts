@@ -50,6 +50,7 @@
                 <td>{{user.provinceName}}</td>
                 <td class="text-sm-right">
                     <button class="btn btn-info" style="margin-right: 4px;" (click)="editUser(user)"> <li class="fa fa-pencil"></li></button>
+                    <button class="btn btn-info" style="margin-right: 4px;" title="Reset Password" (click)="resetUserPassword(user.id)"> <li class="fa fa-undo"></li></button>
                     <button type="button" class="btn btn-danger btn-s" (click)="deleteUser(user.id)"> <span class="fa fa-trash"></span> </button>
                 </td>
             </tr>

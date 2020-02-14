@@ -109,7 +109,4 @@ getTransactions(wbsId: string | number, page?, itemsPerPage?): Observable<Pagina
 getTransTypes() {
   return this.http.get(this.baseUrl + 'lookup/GetTransTypes');
 }
-getProvinces() {
-  return this.http.get(this.baseUrl + 'lookup/GetProvinces');
-}
 }

@@ -1,3 +1,4 @@
+import { GeneralService } from './../../_services/general.service';
 import { RegisterUser } from './../../_models/RegisterUser';
 import { UserEditModalComponent } from './../Modals/UserEditModal/UserEditModal.component';
 import { UserAddModalComponent } from './../Modals/UserAddModal/UserAddModal.component';
@@ -32,7 +33,8 @@ export class AdminMainComponent implements OnInit {
     private modalService: BsModalService,
     private route: ActivatedRoute,
     private userService: UserService,
-    public projectService: ProjectService
+    public projectService: ProjectService,
+    public generalService: GeneralService
   ) { }
 
   ngOnInit() {
@@ -46,13 +48,14 @@ export class AdminMainComponent implements OnInit {
     this.userService.getUsers().subscribe((users: any) => {
       this.users = users;
       this.FilteredUsersList = users;
+
     }, error => {
       console.log(error);
     });
   }
 
   getProgrammes() {
-    this.projectService.getProgrammes().subscribe(
+    this.generalService.getProgrammes().subscribe(
       response => {
         this.drProgrammes = response;
       },
@@ -96,8 +99,17 @@ export class AdminMainComponent implements OnInit {
       });
     });
   }
+  resetUserPassword(id: number) {
+    this.alertify.confirm('Warning', 'Are you sure you want to reset this user password?', () => {
+      this.userService.resetPassword(id).subscribe(() => {
+        this.alertify.success('User password reset successfully.');
+      }, error => {
+        this.alertify.error('Failed to reset user password');
+      });
+    });
+  }
   getProvinces() {
-    this.userService.getProvinces().subscribe(
+    this.generalService.getProvinces().subscribe(
       response => {
         this.drProvince = response;
       },

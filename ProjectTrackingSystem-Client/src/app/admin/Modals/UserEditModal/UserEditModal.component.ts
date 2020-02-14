@@ -1,3 +1,4 @@
+import { GeneralService } from './../../../_services/general.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { RegisterUser } from './../../../_models/RegisterUser';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -24,7 +25,8 @@ export class UserEditModalComponent implements OnInit {
     private alertify: AlertifyService,
     private userService: UserService,
     private authServic: AuthService,
-    public bsModalRef: BsModalRef
+    public bsModalRef: BsModalRef,
+    public generalService: GeneralService
   ) {}
 
   ngOnInit() {
@@ -50,15 +52,11 @@ export class UserEditModalComponent implements OnInit {
     this.userService.formEditModalUser
       .get('UserName')
       .setValue(this.user.userName);
-    this.userService.formEditModalUser
-      .get('Password')
-      .setValue(this.user.password);
   }
   getProgrammes() {
-    this.userService.getProgrammes().subscribe(
+    this.generalService.getProgrammes().subscribe(
       response => {
         this.drProgrammes = response;
-        
         const selectedOption = this.drProgrammes.filter(
           programme => programme.programmeName === this.user.programmeName
         )[0];
@@ -88,7 +86,7 @@ export class UserEditModalComponent implements OnInit {
     );
   }
   getProvinces() {
-    this.userService.getProvinces().subscribe(
+    this.generalService.getProvinces().subscribe(
       response => {
         this.drProvince = response;
         const selectedOption = this.drProvince.filter(

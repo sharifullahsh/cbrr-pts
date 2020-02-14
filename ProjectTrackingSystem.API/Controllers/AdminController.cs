@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using ProjectTrackingSystem.API.Models;
 using Microsoft.Extensions.Options;
 using ProjectTrackingSystem.API.Helpers;
+using AutoMapper;
 
 namespace ProjectTrackingSystem.API.Controllers
 {
@@ -19,7 +20,9 @@ namespace ProjectTrackingSystem.API.Controllers
          private readonly DataContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly IMapper _mapper;
          public AdminController(
+            IMapper mapper,
             DataContext context,
             RoleManager<Role> roleMgr,
             UserManager<User> userManager
@@ -29,6 +32,7 @@ namespace ProjectTrackingSystem.API.Controllers
             _userManager = userManager;          
             _context = context;       
             _roleManager = roleMgr; 
+            _mapper = mapper;
         }
         [Authorize(Roles = "Admin")]
         [HttpGet("usersWithRoles")]
@@ -127,6 +131,84 @@ namespace ProjectTrackingSystem.API.Controllers
                 return BadRequest("Failed to remove the roles");
 
             return Ok(await _userManager.GetRolesAsync(user));
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
+        {
+            var role = _roleManager.FindByIdAsync(userForRegisterDto.RoleId).Result;
+            var userToCreate = _mapper.Map<User>(userForRegisterDto);
+
+            IdentityResult result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+
+            //var userToReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
+
+            if (result.Succeeded)
+            {
+                var createdUser = _userManager.FindByNameAsync(userForRegisterDto.Username).Result;
+                 _userManager.AddToRoleAsync(createdUser,role.Name).Wait();
+                 return Ok();
+                // return CreatedAtRoute("GetUser", 
+                //     new { controller = "Users", id = userToCreate.Id }, userToReturn);
+            }
+
+            return BadRequest(result.Errors.ToString());
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("editUser")]
+        public async Task<IActionResult> EditUser(UserForEditRegisterDto userEditDto)
+        {
+            var user = await _userManager.FindByIdAsync(userEditDto.Id.ToString());
+            user.ProgramId = userEditDto.ProgramId;
+            user.ProvinceId = userEditDto.ProvinceId;
+            user.UserName = userEditDto.Username;
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                 var editedUser = _userManager.FindByIdAsync(userEditDto.Id.ToString()).Result;
+                var preRoles = await _roleManager.Roles.Select(r=>r.Name).ToListAsync();
+                await _userManager.RemoveFromRolesAsync(editedUser, preRoles);
+                var role = _roleManager.FindByIdAsync(userEditDto.RoleId).Result;
+               
+                 _userManager.AddToRoleAsync(editedUser,role.Name).Wait();
+                 return Ok();
+            }
+
+            return BadRequest(result.Errors.ToString());
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("changePassword")]
+        public async Task<IActionResult> EditPassword(UserPasswordChangeDto userPassChangeDto)
+        {
+         var user = await _userManager.FindByIdAsync(userPassChangeDto.Id.ToString());
+          var result =  await _userManager.ChangePasswordAsync(user, userPassChangeDto.CurrentPassword, userPassChangeDto.NewPassword);
+
+            if (result.Succeeded)
+            {
+                 return Ok();
+            }
+
+            return BadRequest(result.Errors.ToString());
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("resetPasswrod/{id}")]
+        public async Task<IActionResult> ResetPassword(int id = 0)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if(user == null){
+                return NotFound();
+            }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var result = await _userManager.ResetPasswordAsync(user, token, "1234");
+
+            if (result.Succeeded)
+            {
+                 return Ok();
+            }
+
+            return BadRequest(result.Errors.ToString());
         }
 
     }

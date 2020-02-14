@@ -54,9 +54,6 @@ addProject() {
 editProject(project: Project) {
    return this.http.post(this.baseUrl + 'ProjectTracking/editProject', project);
 }
-getProgrammes() {
-  return  this.http.get(this.baseUrl + 'Lookup/GetProgrammes');
-}
 getCurrencies() {
   return  this.http.get(this.baseUrl + 'Lookup/GetCurrencies');
 }

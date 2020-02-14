@@ -1,3 +1,4 @@
+import { GeneralService } from './../../_services/general.service';
 import { ProjectService } from './../../_services/project.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -23,7 +24,8 @@ export class ProjectAddModalComponent implements OnInit {
   constructor(
     public bsModalRef: BsModalRef,
     private alertify: AlertifyService,
-    public projectService: ProjectService
+    public projectService: ProjectService,
+    private generalService: GeneralService
   ) {}
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class ProjectAddModalComponent implements OnInit {
   }
 
   getProgrammes() {
-    this.projectService.getProgrammes().subscribe(
+    this.generalService.getProgrammes().subscribe(
       response => {
         this.drProgrammes = response;
       },

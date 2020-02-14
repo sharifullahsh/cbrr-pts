@@ -41,63 +41,7 @@ namespace ProjectTrackingSystem.API.Controllers
             _roleManager = roleMgr; 
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
-        {
-            var role = _roleManager.FindByIdAsync(userForRegisterDto.RoleId).Result;
-            var userToCreate = _mapper.Map<User>(userForRegisterDto);
-
-            IdentityResult result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
-
-            //var userToReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
-
-            if (result.Succeeded)
-            {
-                var createdUser = _userManager.FindByNameAsync(userForRegisterDto.Username).Result;
-                 _userManager.AddToRoleAsync(createdUser,role.Name).Wait();
-                 return Ok();
-                // return CreatedAtRoute("GetUser", 
-                //     new { controller = "Users", id = userToCreate.Id }, userToReturn);
-            }
-
-            return BadRequest(result.Errors.ToString());
-        }
-
-        [HttpPost("editUser")]
-        public async Task<IActionResult> EditUser(UserForEditRegisterDto userEditDto)
-        {
-            var user = await _userManager.FindByIdAsync(userEditDto.Id.ToString());
-            user.ProgramId = userEditDto.ProgramId;
-            user.ProvinceId = userEditDto.ProvinceId;
-            user.UserName = userEditDto.Username;
-            var result = await _userManager.UpdateAsync(user);
-
-            if (result.Succeeded)
-            {
-                 var editedUser = _userManager.FindByIdAsync(userEditDto.Id.ToString()).Result;
-                var preRoles = await _roleManager.Roles.Select(r=>r.Name).ToListAsync();
-                await _userManager.RemoveFromRolesAsync(editedUser, preRoles);
-                var role = _roleManager.FindByIdAsync(userEditDto.RoleId).Result;
-               
-                 _userManager.AddToRoleAsync(editedUser,role.Name).Wait();
-                 return Ok();
-            }
-
-            return BadRequest(result.Errors.ToString());
-        }
-        [HttpPost("changePassword")]
-        public async Task<IActionResult> EditPassword(UserPasswordChangeDto userPassChangeDto)
-        {
-         var user = await _userManager.FindByIdAsync(userPassChangeDto.Id.ToString());
-          var result =  await _userManager.ChangePasswordAsync(user, userPassChangeDto.CurrentPassword, userPassChangeDto.NewPassword);
-
-            if (result.Succeeded)
-            {
-                 return Ok();
-            }
-
-            return BadRequest(result.Errors.ToString());
-        }
+        
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
