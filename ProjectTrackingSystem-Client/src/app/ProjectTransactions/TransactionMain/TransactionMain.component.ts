@@ -154,7 +154,16 @@ export class TransactionMainComponent implements OnInit {
       });
   }
 
-   deleteTransaction(id) { }
+   deleteTransaction(id: number) {
+    this.alertify.confirm('Warning', 'Are you sure you want to delete this transaction?', () => {
+      this.projTransService.deleteTrans(id).subscribe(() => {
+        this.alertify.success('Transaction has been deleted');
+        this.loadTrans();
+      }, error => {
+        this.alertify.error('Failed to delete the WBS');
+      });
+    });
+  }
 
    searchTransaction(){
     this.loadTrans();

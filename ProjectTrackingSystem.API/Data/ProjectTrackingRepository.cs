@@ -58,7 +58,7 @@ namespace ProjectTrackingSystem.API.Data {
         }
 
         public async Task<List<WBSForListDto>> GetWBSes (int ProjectId) {
-            var res = await (from WBS in _context.WBS where (WBS.ProjectId == ProjectId) select new WBSForListDto {
+            var res = await (from WBS in _context.WBS where (WBS.ProjectId == ProjectId && WBS.IsDeleted == false) select new WBSForListDto {
                 Id = WBS.Id,
                     WBSId = WBS.WBSId,
                     Target = WBS.Target,
@@ -77,7 +77,7 @@ namespace ProjectTrackingSystem.API.Data {
         }
 
         public async Task<PagedList<TransactionsForListDto>> GetTransactions (TransParams transParams) {
-            var res = (from transaction in _context.ProjectTransactions where (transaction.IsDeleted == false && transaction.WBSId == transParams.WBSId) select new TransactionsForListDto {
+            var res = (from transaction in _context.ProjectTransactions where (transaction.IsDeleted == false && transaction.WBSId == transParams.WBSId) orderby transaction.TransactionDate descending select new TransactionsForListDto {
                 Id = transaction.Id,
                     TransactionTypeId = transaction.TransactionTypeId,
                     TransactionDate = transaction.TransactionDate,

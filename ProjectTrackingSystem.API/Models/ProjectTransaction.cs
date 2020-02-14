@@ -25,7 +25,7 @@ namespace ProjectTrackingSystem.API.Models
 
         public ProjectTransaction()
         {
-            IsDeleted=false;
+            IsDeleted = false;
         }
 
     }

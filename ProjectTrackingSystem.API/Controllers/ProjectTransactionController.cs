@@ -83,5 +83,29 @@ namespace ProjectTrackingSystem.API.Controllers {
                 throw new Exception ($"Updating failed on save");
             return NoContent ();
         }
+        [HttpPost ("RemoveTransaction/{id}")]
+        public async Task<IActionResult> RemoveTransaction (int Id) {
+
+            var transFromRepo = await _repo.GetTransaction (Id);
+            if (transFromRepo == null) {
+                return NotFound ("Transaction Not Found");
+            }
+            transFromRepo.IsDeleted = true;
+            if (!await _repo.SaveAll ())
+                throw new Exception ($"Deleting failed!");
+            return Ok ();
+        }
+        [HttpPost ("RemoveTransactionEven/{id}")]
+        public async Task<IActionResult> RemoveTransactionEven (int Id) {
+
+            var transEventFromRepo = await _repo.GetTransactionEvent (Id);
+            if (transEventFromRepo == null) {
+                return NotFound ("Transaction event Not Found");
+            }
+            transEventFromRepo.IsDeleted = true;
+            if (!await _repo.SaveAll ())
+                throw new Exception ($"Deleting failed!");
+            return Ok ();
+        }
     }
 }

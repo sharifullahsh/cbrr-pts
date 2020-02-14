@@ -65,7 +65,7 @@ export class ProjectTransactionService {
  }
 
  deleteTrans(id: string | number) {
-  return  this.http.post(this.baseUrl + 'WBS/RemoveWBS/' + id, {});
+  return  this.http.post(this.baseUrl + 'ProjectTransaction/RemoveTransaction/' + id, {});
 }
 getTransactions(wbsId: string | number, page?, itemsPerPage?): Observable<PaginatedResult<Transaction[]>> {
   const paginatedResult: PaginatedResult<Transaction[]> = new PaginatedResult<Transaction[]>();

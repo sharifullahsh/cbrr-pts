@@ -55,8 +55,16 @@ export class TransactionEventsComponent implements OnInit, OnChanges {
       });
   }
 
-  deleteTransEvent(id) {}
-
+  deleteTransEvent(id: number) {
+    this.alertify.confirm('Warning', 'Are you sure you want to delete project transaction detail?', () => {
+      this.transEventService.deleteTransEvent(id).subscribe(() => {
+        this.alertify.success('Transaction event has been deleted');
+        this.loadTransEvent();
+      }, error => {
+        this.alertify.error('Failed to delete the WBS');
+      });
+    });
+  }
   openAddModal() {
     const initialState = {
       list: [

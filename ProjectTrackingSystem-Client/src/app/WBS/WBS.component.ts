@@ -75,7 +75,7 @@ editWBS(wbs) {
     });
  }
  deleteWBS(id: number) {
-  this.alertify.confirm('Warning', 'Are you sure you want to delete this project?', () => {
+  this.alertify.confirm('Warning', 'Are you sure you want to delete this WBS?', () => {
     this.WBSService.deleteWBS(id).subscribe(() => {
       this.loadWBSes();
       this.alertify.success('WBS has been deleted');

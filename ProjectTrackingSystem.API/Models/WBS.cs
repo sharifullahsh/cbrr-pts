@@ -16,6 +16,13 @@ namespace ProjectTrackingSystem.API.Models
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
         public virtual Unit Unit { get; set; }
+        public bool IsDeleted { get; set; }
+
         public ICollection<ProjectTransaction> ProjectTransactions { get; set; }
+         public WBS ()
+        {
+            IsDeleted=false;
+        }
+
     }
 }

@@ -62,5 +62,17 @@ namespace ProjectTrackingSystem.API.Controllers {
             return Ok (WBSFromRepo);
 
         }
+        [HttpPost ("RemoveWBS/{id}")]
+        public async Task<IActionResult> RemoveWBS (int Id) {
+
+            var WBSFromRepo = await _repo.GetWBS (Id);
+            if (WBSFromRepo == null) {
+                return NotFound ("WBS Not Found");
+            }
+            WBSFromRepo.IsDeleted = true;
+            if (!await _repo.SaveAll ())
+                throw new Exception ($"Deleting failed!");
+            return Ok ();
+        }
     }
 }

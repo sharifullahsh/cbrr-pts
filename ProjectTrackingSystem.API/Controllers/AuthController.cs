@@ -47,15 +47,16 @@ namespace ProjectTrackingSystem.API.Controllers
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var user = await _userManager.FindByNameAsync(userForLoginDto.Username);
-
+            if(user.IsDeleted == true){
+                return Unauthorized();
+            }
             var result = await _signInManager
                 .CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
-
             if (result.Succeeded)
             {
                 var appUser = await _userManager.Users
                     .FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.Username.ToUpper());
-
+                
                 var userToReturn = _mapper.Map<UserForListDto>(appUser);
 
                 return Ok(new
