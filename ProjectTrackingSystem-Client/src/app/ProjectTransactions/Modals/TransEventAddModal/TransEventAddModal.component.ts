@@ -48,7 +48,6 @@ export class TransEventAddModalComponent implements OnInit {
     this.transEventService.getDepartments().subscribe(
       response => {
         this.drDepartment = response;
-        // console.log(this.drTransactionType);
       },
       error => {
         this.alertify.error(error);
@@ -69,7 +68,6 @@ export class TransEventAddModalComponent implements OnInit {
     this.transEventService.getResponsibles().subscribe(
       response => {
         this.drResponsible = response;
-        console.log(this.drResponsible);
       },
       error => {
         this.alertify.error(error);
@@ -81,7 +79,6 @@ export class TransEventAddModalComponent implements OnInit {
     this.transEventService.getEventStatus().subscribe(
       response => {
         this.drEventStatus = response;
-        console.log(this.drEventStatus);
       },
       error => {
         this.alertify.error(error);
@@ -94,7 +91,6 @@ export class TransEventAddModalComponent implements OnInit {
       this.transEventService.uploadFile(this.file).subscribe(event => {
         if (event.type === HttpEventType.Response) {
           this.response = event.body;
-          console.log(this.response);
 
           // add transaction event
           this.transEventService

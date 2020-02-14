@@ -63,7 +63,6 @@ export class UserAddModalComponent implements OnInit {
         this.updateTable.emit();
       },
       err => {
-        console.log("error is >>>>>>"+ JSON.stringify(err));
         this.alertify.error(err + 'Error, Operation Failed!');
       }
     );

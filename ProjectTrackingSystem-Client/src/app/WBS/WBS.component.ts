@@ -34,13 +34,11 @@ export class WBSComponent implements OnInit {
     // this.loadWBSes();
   }
 loadWBSes() {
-  // console.log(this.searchParams.projectId);
   this.WBSService.getWBSes(this.searchParams.projectId)
   .subscribe((res: WBS[]) => {
     this.WBSList = res;
     this.FilteredWBSList = res;
     this.showWBSListDiv = true;
-    // console.log(res);
 }, error => {
   this.alertify.error(error);
 });
@@ -48,7 +46,6 @@ loadWBSes() {
 loadProjects(programmeId: number) {
   this.projectService.getProjectsByProgramme(programmeId).subscribe((projects: any[]) => {
     this.projectList = projects;
-    // console.log(this.projectList);
   }, error => {
     console.log(error);
   });

@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { UserService } from './../../../_services/user.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AlertifyService } from 'src/app/_services/alertify.service';
-import { isArray } from 'util';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -35,7 +34,7 @@ export class UserEditModalComponent implements OnInit {
     this.getProvinces();
     this.setFormValues();
   }
-  setFormValues() {   
+  setFormValues() {
     this.userService.formEditModalUser
       .get('Id')
       .setValue(this.user.id);

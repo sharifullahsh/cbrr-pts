@@ -58,11 +58,9 @@ export class ProjectTransactionService {
       exchangeRate: this.formModalTrans.value.ExchangeRate,
       wbsId
     };
-    console.log(formData);
     return this.http.post(this.baseUrl + 'ProjectTransaction/AddTransaction', formData);
   }
   editTrans(trans: Transaction) {
-    console.log(trans);
     return this.http.post(this.baseUrl + 'ProjectTransaction/EditTransaction', trans);
  }
 

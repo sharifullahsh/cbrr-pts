@@ -61,7 +61,6 @@ export class TransactionMainComponent implements OnInit {
     this.projTransService.getTransTypes().subscribe(
       response => {
         this.drTransactionType = response;
-        // console.log(this.drTransactionType);
       },
       error => {
         this.alertify.error(error);
@@ -89,11 +88,9 @@ export class TransactionMainComponent implements OnInit {
   }
 
   loadProjects() {
-    // console.log(this.searchParams.projectId);
     this.projectService.getProjectsByProgramme(this.user.programId).subscribe(
       (res: Project[]) => {
         this.projectList = res;
-        // console.log(res);
       },
       error => {
         this.alertify.error(error);
@@ -101,11 +98,9 @@ export class TransactionMainComponent implements OnInit {
     );
   }
   loadWBSes() {
-    // console.log(this.searchParams.projectId);
     this.WBSService.getWBSes(this.searchParams.projectId).subscribe(
       (res: WBS[]) => {
         this.WBSList = res;
-        // console.log(res);
       },
       error => {
         this.alertify.error(error);
@@ -121,7 +116,6 @@ export class TransactionMainComponent implements OnInit {
       this.showTransEvents(0, -1);
       this.showTrnsactionDiv = true;
 
-      // console.log(res);
   }, error => {
     this.alertify.error(error);
   });

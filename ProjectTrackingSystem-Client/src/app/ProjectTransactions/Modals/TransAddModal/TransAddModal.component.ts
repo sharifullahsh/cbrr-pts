@@ -39,7 +39,6 @@ export class TransAddModalComponent implements OnInit {
     this.transService.getTransTypes().subscribe(
       response => {
         this.drTransactionType = response;
-        // console.log(this.drTransactionType);
       },
       error => {
         this.alertify.error(error);
@@ -60,7 +59,6 @@ export class TransAddModalComponent implements OnInit {
     this.projectService.getCurrencies().subscribe(
       response => {
         this.drCurrencies = response;
-        console.log(this.drCurrencies);
       },
       error => {
         this.alertify.error(error);

@@ -147,7 +147,6 @@ export class TransEventEditModalComponent implements OnInit {
         this.transEventService.uploadFile(this.file).subscribe(event => {
           if (event.type === HttpEventType.Response) {
             this.response = event.body;
-            // console.log(this.response);
 
             // add transaction edit event
             this.transEventService.editTransEvent(this.transEvent, this.response.dbPath).subscribe(

@@ -1,3 +1,4 @@
+import { ChangePassModalComponent } from './profile/Modals/ChangePassModal/ChangePassModal.component';
 import { UserEditModalComponent } from './admin/Modals/UserEditModal/UserEditModal.component';
 import { UserAddModalComponent } from './admin/Modals/UserAddModal/UserAddModal.component';
 import { UserService } from './_services/user.service';
@@ -39,6 +40,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { ProjectsComponent } from './Project/projects/projects.component';
 import { WBSComponent } from './WBS/WBS.component';
+import { ProfileComponent } from './profile/ProfileMain/profile.component';
 
 
 export function tokenGetter() {
@@ -66,7 +68,9 @@ export function tokenGetter() {
       AdminMainComponent,
       AdminMainComponent,
       UserAddModalComponent,
-      UserEditModalComponent
+      UserEditModalComponent,
+      ProfileComponent,
+      ChangePassModalComponent
    ],
    imports: [
       BrowserModule,
@@ -117,7 +121,8 @@ export function tokenGetter() {
     TransEventAddModalComponent,
     TransEventEditModalComponent,
     UserAddModalComponent,
-    UserEditModalComponent
+    UserEditModalComponent,
+    ChangePassModalComponent
   ],
   bootstrap: [AppComponent]
 })

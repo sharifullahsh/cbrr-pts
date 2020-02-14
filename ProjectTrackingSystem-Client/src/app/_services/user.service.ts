@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Validators, FormBuilder } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { MustMatch } from '../_helpers/validators';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +27,23 @@ export class UserService {
   formEditModalUser = this.fb.group({
     Id: [''],
     UserName: ['', Validators.required],
-    Password: ['', Validators.required],
     RoleId: ['', Validators.required],
     ProgramId: ['', Validators.required],
     ProvinceId: ['', Validators.required],
   });
+
+  formChangePassModal = this.fb.group({
+    Id: [''],
+    CurrentPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+    NewPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+    ConfirmPassword : ['', Validators.required]
+  }, {validator : MustMatch('NewPassword', 'ConfirmPassword')});
   
   getUsers() {
     return  this.http.get(this.baseUrl + 'Admin/allUsers');
+  }
+  getUser(id: number) {
+    return  this.http.get(this.baseUrl + 'Admin/getUser/' + id);
   }
   getProgrammes() {
     return  this.http.get(this.baseUrl + 'Lookup/GetProgrammes');
@@ -45,12 +55,14 @@ export class UserService {
     return this.http.get(this.baseUrl + 'lookup/GetProvinces');
   }
   registerUser(user: RegisterUser) {
-    console.log("inside the regis te and urse is "+ JSON.stringify(user));
     return this.http.post(this.baseUrl + 'Auth/register', user);
   }
   
   editUser(user: RegisterUser) {
     return this.http.post(this.baseUrl + 'Auth/editUser', user);
+   }
+   editPassword(passworChangeInfo: any) {
+    return this.http.post(this.baseUrl + 'Auth/changePassword', passworChangeInfo);
    }
 
 

@@ -9,15 +9,12 @@ import { AlertifyService } from '../_services/alertify.service';
 })
 export class AdminGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router,
-    private alertify: AlertifyService) {
-      console.log(">>>>>>>>>>>>>>>>>admin<<<<<<<<<<<<<<<<<<<<<");
+              private alertify: AlertifyService) {
     }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log("Inside admin gurd>>>>>>>>>>>>>>>");
     const match = this.authService.roleMatch(['Admin']);
-    console.log("match is >>>>>>>>"+match);
     if (match) {
         return true;
       } else {

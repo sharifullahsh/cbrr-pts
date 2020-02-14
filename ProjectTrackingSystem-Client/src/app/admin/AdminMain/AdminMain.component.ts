@@ -4,11 +4,9 @@ import { UserAddModalComponent } from './../Modals/UserAddModal/UserAddModal.com
 import { ProjectService } from './../../_services/project.service';
 import { UserService } from './../../_services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { WBSService } from './../../_services/WBS.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../../_models/user';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
 
@@ -57,7 +55,6 @@ export class AdminMainComponent implements OnInit {
     this.projectService.getProgrammes().subscribe(
       response => {
         this.drProgrammes = response;
-        console.log(this.drProgrammes);
       },
       error => {
         this.alertify.error(error);

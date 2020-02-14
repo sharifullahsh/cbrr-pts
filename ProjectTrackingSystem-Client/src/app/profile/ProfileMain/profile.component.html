@@ -1,0 +1,30 @@
+<div class="container mt-2 text-black-50">
+    <div class="row mb-2">
+        <div class="col">
+            <h4>User Information</h4>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-responsive table-striped w-100">
+            <tr>
+                <th class="w-25">User Name</th>
+                <td>{{user?.userName}}</td>
+            </tr>
+            <tr>
+                <th>Programme Name</th>
+                <td>{{user?.programmeName}}</td>
+            </tr>
+            <tr>
+                <th>Role Name</th>
+                <td>{{user?.roleName}}</td>
+            </tr>
+            <tr>
+                <th>Province</th>
+                <td>{{user?.provinceName}}</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <button class="btn btn-info" style="margin-right: 4px;" (click)="changePassword(user)"> <li class="fa fa-key"></li>Change Password</button>
+    </div>
+</div>

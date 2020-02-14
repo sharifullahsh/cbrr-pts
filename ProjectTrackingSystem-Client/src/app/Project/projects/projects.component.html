@@ -1,36 +1,35 @@
 <div class="container mt-3">
-  <h3 style="text-align: center;">Projects</h3>
-  <div class="row">
-    <div style="margin-top: 10px;">
-      <button type="button" class="btn btn-primary" style="margin-bottom:10px; display: inline-block"
-        (click)="openModalWithComponent()">
+    <h3 style="text-align: center;">Projects</h3>
+    <div class="row">
+        <div style="margin-top: 10px;">
+            <button type="button" class="btn btn-primary" style="margin-bottom:10px; display: inline-block" (click)="openModalWithComponent()">
         <li class="fa fa-plus"></li> Add New Project
       </button>
+        </div>
+        <table class="table">
+            <tr>
+                <th style="width: 10%">Programme</th>
+                <th style="width: 10%">Project Code</th>
+                <th style="width: 25%">Project Name</th>
+                <th style="width: 10%">Start Date</th>
+                <th style="width: 10%">End Date</th>
+                <th style="width: 10%">Currency</th>
+                <th style="width: 10%">Budget</th>
+                <th style="width: 15%"></th>
+            </tr>
+            <tr *ngFor="let project of projects">
+                <td>{{project.programme}}</td>
+                <td>{{project.projectCode}}</td>
+                <td>{{project.projectName}}</td>
+                <td>{{project.startDate | date}}</td>
+                <td>{{project.endDate |date}}</td>
+                <td>{{project.currency}}</td>
+                <td>{{project.budget}}</td>
+                <td class="text-sm-right"><button class="btn btn-info" style="margin-right: 4px;" (click)="editProject(project)"> <li class="fa fa-pencil"></li></button>
+                    <button type="button" class="btn btn-danger btn-s" (click)="deleteProject(project.id)"> <span class="fa fa-trash"></span> </button>
+                </td>
+
+            </tr>
+        </table>
     </div>
-    <table class="table">
-      <tr>
-        <th style="width: 10%">Programme</th>
-        <th style="width: 10%">Project Code</th>
-        <th style="width: 25%">Project Name</th>
-        <th style="width: 10%">Start Date</th>
-        <th style="width: 10%">End Date</th>
-        <th style="width: 10%">Currency</th>
-        <th style="width: 10%">Budget</th>
-        <th style="width: 15%"></th>
-      </tr>
-      <tr *ngFor="let project of projects">
-        <td>{{project.programme}}</td>
-        <td>{{project.projectCode}}</td>
-        <td>{{project.projectName}}</td>
-        <td>{{project.startDate | date}}</td>
-        <td>{{project.endDate |date}}</td>
-        <td>{{project.currency}}</td>
-        <td>{{project.budget}}</td>
-        <td><button class="btn btn-info" style="margin-right: 4px;" (click)="editProject(project)"> <li class="fa fa-pencil"></li></button>
-            <button type="button" class="btn btn-danger btn-s" (click)="deleteProject(project.id)"> <span class="fa fa-trash"></span> </button>
-        </td>
-        
-      </tr>
-    </table>
-  </div>
 </div>

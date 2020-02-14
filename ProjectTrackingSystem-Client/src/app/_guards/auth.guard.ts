@@ -10,17 +10,13 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router,
               private alertify: AlertifyService) {
-                console.log(">>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<");
               }
 
     canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log("Inside the canActivate auth gurd");
     const roles = next.firstChild.data['roles'] as Array<string>;
-    console.log("Inside the CanActivate gar>>>>>>>>>>>>>>>>>>>");
     if (roles) {
-      console.log("Inside the CanActivate gar>>>>>>>>>>>>>>>>>>>");
       const match = this.authService.roleMatch(roles);
       if (match) {
         return true;

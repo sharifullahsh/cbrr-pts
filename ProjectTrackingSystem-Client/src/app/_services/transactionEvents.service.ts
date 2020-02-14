@@ -49,7 +49,6 @@ export class TransactionEventsService {
       projectTransactionId: transId,
       URL: path
     };
-    console.log(formData);
     return this.http.post(
       this.baseUrl + 'ProjectTransaction/AddTransactionEvent',
       formData
@@ -72,7 +71,6 @@ export class TransactionEventsService {
     );
   }
   editTransEvent(transEvent: TransactionEvents, path: string) {
-    console.log(transEvent);
     transEvent.url = path;
     return this.http.post(
       this.baseUrl + 'ProjectTransaction/EditTransactionEvent',

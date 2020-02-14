@@ -58,7 +58,6 @@ export class WBSEditModalComponent implements OnInit {
       {},
       this.WBSService.formEditModalWBS.value
     );
-    console.log(this.wbs);
     if (this.WBSService.formEditModalWBS.dirty) {
       this.WBSService.editWBS(this.wbs).subscribe(
         (res: any) => {

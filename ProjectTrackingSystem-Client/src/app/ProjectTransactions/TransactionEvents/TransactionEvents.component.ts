@@ -35,13 +35,11 @@ export class TransactionEventsComponent implements OnInit, OnChanges {
     .getTransEvents(this.transactionId)
     .subscribe((res: TransactionEvents[]) => {
       this.transactionEventsList = res;
-      console.log('events Data', res);
   }, error => {
     this.alertify.error(error);
   });
   }
   ngOnChanges() {
-    console.log(this.transactionId);
     this.loadTransEvent();
   }
 

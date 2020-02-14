@@ -55,11 +55,9 @@ export class WBSService {
       description: this.formModalWBS.value.Description,
       projectId: projId
     };
-    console.log(formData);
     return this.http.post(this.baseUrl + 'WBS/AddWBS', formData);
   }
   editWBS(wbs: WBS) {
-   // console.log(wbs);
     return this.http.post(this.baseUrl + 'WBS/EditWBS', wbs);
  }
 

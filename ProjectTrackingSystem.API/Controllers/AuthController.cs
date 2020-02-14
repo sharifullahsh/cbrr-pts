@@ -85,6 +85,19 @@ namespace ProjectTrackingSystem.API.Controllers
 
             return BadRequest(result.Errors.ToString());
         }
+        [HttpPost("changePassword")]
+        public async Task<IActionResult> EditPassword(UserPasswordChangeDto userPassChangeDto)
+        {
+         var user = await _userManager.FindByIdAsync(userPassChangeDto.Id.ToString());
+          var result =  await _userManager.ChangePasswordAsync(user, userPassChangeDto.CurrentPassword, userPassChangeDto.NewPassword);
+
+            if (result.Succeeded)
+            {
+                 return Ok();
+            }
+
+            return BadRequest(result.Errors.ToString());
+        }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)

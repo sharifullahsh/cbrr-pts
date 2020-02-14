@@ -39,7 +39,6 @@ export class ProjectAddModalComponent implements OnInit {
     this.projectService.getProgrammes().subscribe(
       response => {
         this.drProgrammes = response;
-        console.log(this.drProgrammes);
       },
       error => {
         this.alertify.error(error);
@@ -50,7 +49,6 @@ export class ProjectAddModalComponent implements OnInit {
     this.projectService.getCurrencies().subscribe(
       response => {
         this.drCurrencies = response;
-        console.log(this.drCurrencies);
       },
       error => {
         this.alertify.error(error);
