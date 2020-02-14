@@ -89,6 +89,7 @@ namespace ProjectTrackingSystem.API.Controllers
                                       user.ProgramId,
                                       ProgrammeName = _context.Programmes.Where(p=>p.Id == user.ProgramId).Select(p=>p.ProgrammeName).FirstOrDefault(),
                                       user.ProvinceId,
+                                      user.IsDeleted,
                                       ProvinceName = _context.Provinces.Where(p=>p.Id == user.ProvinceId).Select(p=>p.ProvinceName).FirstOrDefault(),
                                       RoleId = _context.UserRoles.Where(r=> r.UserId == user.Id).Select(u=>u.RoleId).FirstOrDefault(),
                                       RoleName = (from userRole in user.UserRoles
@@ -97,7 +98,7 @@ namespace ProjectTrackingSystem.API.Controllers
                                                equals role.Id
                                                select role.Name).FirstOrDefault()
                                   })
-                                  //.Where(User=>User.UserName != "Admin")
+                                  .Where(user=>user.UserName != "Admin" && user.IsDeleted == false)
                                   .ToListAsync();
             return Ok(userList);
         }
@@ -183,6 +184,22 @@ namespace ProjectTrackingSystem.API.Controllers
         {
          var user = await _userManager.FindByIdAsync(userPassChangeDto.Id.ToString());
           var result =  await _userManager.ChangePasswordAsync(user, userPassChangeDto.CurrentPassword, userPassChangeDto.NewPassword);
+
+            if (result.Succeeded)
+            {
+                 return Ok();
+            }
+
+            return BadRequest(result.Errors.ToString());
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("RemoveUser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id = 0)
+        {
+         var user = await _userManager.FindByIdAsync(id.ToString());
+            user.IsDeleted = true;
+           
+            var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
             {
