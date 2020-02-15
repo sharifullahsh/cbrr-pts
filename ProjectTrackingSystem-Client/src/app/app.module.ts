@@ -42,6 +42,7 @@ import { HomeComponent } from './home/home.component';
 import { ProjectsComponent } from './Project/projects/projects.component';
 import { WBSComponent } from './WBS/WBS.component';
 import { ProfileComponent } from './profile/ProfileMain/profile.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 export function tokenGetter() {
@@ -71,7 +72,8 @@ export function tokenGetter() {
       UserAddModalComponent,
       UserEditModalComponent,
       ProfileComponent,
-      ChangePassModalComponent
+      ChangePassModalComponent,
+      PageNotFoundComponent
    ],
    imports: [
       BrowserModule,

@@ -15,20 +15,23 @@ export class AuthGuard implements CanActivate {
     canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const roles = next.firstChild.data['roles'] as Array<string>;
-    if (roles) {
-      const match = this.authService.roleMatch(roles);
-      if (match) {
-        return true;
-      } else {
-        this.router.navigate(['/home']);
-        this.alertify.error('You are not authorized!');
-      }
-    }
-
-    if (this.authService.loggedIn()) {
+    if (next.data.roles && this.authService.roleMatch(next.data.roles)) {
       return true;
     }
+   // const roles = next.firstChild.data['roles'] as Array<string>;
+    // if (roles) {
+    //   const match = this.authService.roleMatch(roles);
+    //   if (match) {
+    //     return true;
+    //   } else {
+    //     this.router.navigate(['/home']);
+    //     this.alertify.error('You are not authorized!');
+    //   }
+    // }
+
+    // if (this.authService.loggedIn()) {
+    //   return true;
+    // }
 
     this.alertify.error('You are not authorized!');
     this.router.navigate(['/home']);
