@@ -11,7 +11,6 @@ import { AdminGuard } from './_guards/admin.guard';
 import { ProfileComponent } from './profile/ProfileMain/profile.component';
 
 export const appRoutes: Routes = [
-    //{path: '', canActivate: [AuthGuard], children: [
     {
         path: 'project', component: ProjectsComponent, 
         canActivate: [AuthGuard], data: { roles: ['Admin', 'DataEntry'] }},
@@ -29,7 +28,6 @@ export const appRoutes: Routes = [
     {
         path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { roles: ['Admin', 'DataEntry'] }
     },
-    //]},
     {path: 'home', component: HomeComponent},
     { path: '',   redirectTo: '/home', pathMatch: 'full' },
     {path: '**', redirectTo: '', component: PageNotFoundComponent, pathMatch: 'full'},
