@@ -22,34 +22,34 @@ export class UserEditModalComponent implements OnInit {
   drProvince: any;
   user: any;
   constructor(
-    private alertify: AlertifyService,
-    private userService: UserService,
-    private authServic: AuthService,
+    public alertify: AlertifyService,
+    public userService: UserService,
+    public authServic: AuthService,
     public bsModalRef: BsModalRef,
     public generalService: GeneralService
   ) {}
 
   ngOnInit() {
-    this.userService.formModalUser.reset();
+    this.userService.editUserFormModal.reset();
     this.getProgrammes();
     this.getAllRoles();
     this.getProvinces();
     this.setFormValues();
   }
   setFormValues() {
-    this.userService.formEditModalUser
+    this.userService.editUserFormModal
       .get('Id')
       .setValue(this.user.id);
-    this.userService.formEditModalUser
+    this.userService.editUserFormModal
       .get('ProgramId')
       .setValue(this.user.programId);
-    this.userService.formEditModalUser
+    this.userService.editUserFormModal
       .get('ProvinceId')
       .setValue(this.user.provinceId);
-    this.userService.formEditModalUser
+    this.userService.editUserFormModal
       .get('RoleId')
       .setValue(this.user.roleId);
-    this.userService.formEditModalUser
+    this.userService.editUserFormModal
       .get('UserName')
       .setValue(this.user.userName);
   }
@@ -60,7 +60,7 @@ export class UserEditModalComponent implements OnInit {
         const selectedOption = this.drProgrammes.filter(
           programme => programme.programmeName === this.user.programmeName
         )[0];
-        this.userService.formEditModalUser
+        this.userService.editUserFormModal
           .get('ProgramId')
           .setValue(selectedOption.id);
       },
@@ -76,7 +76,7 @@ export class UserEditModalComponent implements OnInit {
         const selectedOption = this.drRoles.filter(
           role => role.name === this.user.roleName
         )[0];
-        this.userService.formEditModalUser
+        this.userService.editUserFormModal
           .get('RoleId')
           .setValue(selectedOption.id);
       },
@@ -92,7 +92,7 @@ export class UserEditModalComponent implements OnInit {
         const selectedOption = this.drProvince.filter(
           province => province.provinceName === this.user.provinceName
         )[0];
-        this.userService.formEditModalUser
+        this.userService.editUserFormModal
           .get('ProvinceId')
           .setValue(selectedOption.id);
       },
@@ -105,24 +105,30 @@ export class UserEditModalComponent implements OnInit {
   editUser() {
     this.user = Object.assign(
       {},
-      this.userService.formEditModalUser.value
+      this.userService.editUserFormModal.value
     );
-    if (this.userService.formEditModalUser.dirty) {
-      this.user.programId = +this.userService.formEditModalUser.get('ProgramId').value;
-      this.user.provinceId = +this.userService.formEditModalUser.get('ProvinceId').value;
-      this.user.roleId = this.userService.formEditModalUser.get('RoleId').value;
-      this.user.userName = this.userService.formEditModalUser.get('UserName').value;
-
-      this.userService.editUser(this.user).subscribe(
-        (res: any) => {
-          this.userService.formEditModalUser.reset();
-          this.alertify.success('User Updated Successfully');
-          this.updateTable.emit();
-        },
-        err => {
-          this.alertify.error(err + 'Error, Operation Failed!');
-        }
-      );
+    if (this.userService.editUserFormModal.dirty) {
+      if(this.userService.editUserFormModal.valid){
+        this.bsModalRef.hide();
+        this.user.programId = +this.userService.editUserFormModal.get('ProgramId').value;
+        this.user.provinceId = +this.userService.editUserFormModal.get('ProvinceId').value;
+        this.user.roleId = this.userService.editUserFormModal.get('RoleId').value;
+        this.user.userName = this.userService.editUserFormModal.get('UserName').value;
+        this.bsModalRef.hide();
+        this.userService.editUser(this.user).subscribe(
+          (res: any) => {
+            this.userService.editUserFormModal.reset();
+            this.alertify.success('User Updated Successfully');
+            this.updateTable.emit();
+          },
+          err => {
+            this.alertify.error(err + 'Error, Operation Failed!');
+          }
+        );
+        return;
+      }
+      return;
     }
+    this.bsModalRef.hide();
   }
 }

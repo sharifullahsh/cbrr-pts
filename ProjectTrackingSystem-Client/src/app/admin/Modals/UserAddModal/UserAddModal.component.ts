@@ -23,16 +23,17 @@ export class UserAddModalComponent implements OnInit {
   drRoles: any;
   response: any;
   drProvince: any;
+  submitted = false;
   constructor(
     public bsModalRef: BsModalRef,
-    private alertify: AlertifyService,
-    private userService: UserService,
-    private authServic: AuthService,
-    private generalService: GeneralService
+    public alertify: AlertifyService,
+    public userService: UserService,
+    public authServic: AuthService,
+    public generalService: GeneralService
   ) {}
 
   ngOnInit() {
-    this.userService.formModalUser.reset();
+    this.userService.addUserFormModal.reset();
     this.getProgrammes();
     this.getAllRoles();
     this.getProvinces();
@@ -57,17 +58,23 @@ export class UserAddModalComponent implements OnInit {
       }
     );
   }
+  
   addUser() {
-    this.userService.registerUser(this.userService.formModalUser.value).subscribe(
-      (res: any) => {
-        this.userService.formModalUser.reset();
-        this.alertify.success('Operation Successfully!');
-        this.updateTable.emit();
-      },
-      err => {
-        this.alertify.error(err + 'Error, Operation Failed!');
-      }
-    );
+    this.submitted = true;
+    if (this.userService.addUserFormModal.valid) {
+      this.bsModalRef.hide();
+      this.userService.registerUser(this.userService.addUserFormModal.value).subscribe(
+        (res: any) => {
+          this.userService.addUserFormModal.reset();
+          this.alertify.success('Operation Successfully!');
+          this.updateTable.emit();
+        },
+        err => {
+          this.alertify.error(err + 'Error, Operation Failed!');
+        }
+      );
+    }
+    return;
   }
   getProvinces() {
     this.generalService.getProvinces().subscribe(

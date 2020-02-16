@@ -5,19 +5,19 @@
   </button>
 </div>
 <div class="modal-body">
-    <form #userForm="ngForm" [formGroup]="userService.formEditModalUser" id="UserForm" autocomplete="off">
+    <form #userForm="ngForm" [formGroup]="userService.editUserFormModal" id="UserEditForm" autocomplete="off">
         <div class="form-group">
             <input type="hidden" formControlName="Id" [value]="user.id">
             <div class="input-group">
                 <div class="input-group-prepend col-md-4 text-center pr-0 pl-0">
                     <div class="input-group-text w-100">Programme Name</div>
                 </div>
-                <select formControlName="ProgramId" class="form-control" [ngClass]="{'is-invalid': userService.formModalUser.get('ProgramId').errors && userService.formModalUser.get('ProgramId').touched}">
+                <select formControlName="ProgramId" class="form-control" [ngClass]="{'is-invalid': userService.editUserFormModal.get('ProgramId').errors && userService.editUserFormModal.get('ProgramId').touched}">
                     <option [ngValue] ="null" disabled selected>Please Select Programme</option>
                     <option *ngFor="let programme of drProgrammes" [value]="programme.id">{{programme.programmeName}}</option>
                   </select>
             </div>
-            <div class="invalid-feedback" *ngIf="userService.formModalUser.get('ProgramId').touched && userService.formModalUser.get('ProgramId').hasError('required')">
+            <div class="invalid-feedback" *ngIf="userService.editUserFormModal.get('ProgramId').touched && userService.editUserFormModal.get('ProgramId').hasError('required')">
                 This field is required</div>
         </div>
         <div class="form-group">
@@ -25,7 +25,7 @@
                 <div class="input-group-prepend col-md-4 text-center pr-0 pl-0">
                     <div class="input-group-text w-100">Province</div>
                 </div>
-                <select formControlName="ProvinceId" class="form-control" [ngClass]="{'is-invalid': userService.formModalUser.get('ProvinceId').errors && userService.formModalUser.get('ProvinceId').touched}">
+                <select formControlName="ProvinceId" class="form-control" [ngClass]="{'is-invalid': userService.editUserFormModal.get('ProvinceId').errors && userService.editUserFormModal.get('ProvinceId').touched}">
                     <option [ngValue]="null" disabled selected>Please Select Province</option>
                     <option *ngFor="let province of drProvince" [value]="province.id">{{province.provinceName}}</option>
                   </select>
@@ -36,12 +36,12 @@
                 <div class="input-group-prepend col-md-4 text-center pr-0 pl-0">
                     <div class="input-group-text w-100">Role</div>
                 </div>
-                <select formControlName="RoleId" class="form-control" [ngClass]="{'is-invalid': userService.formModalUser.get('RoleId').errors && userService.formModalUser.get('RoleId').touched}">
+                <select formControlName="RoleId" class="form-control" [ngClass]="{'is-invalid': userService.editUserFormModal.get('RoleId').errors && userService.editUserFormModal.get('RoleId').touched}">
                     <option [ngValue] ="null" disabled selected>Please Select Role</option>
                     <option *ngFor="let role of drRoles" [value]="role.id">{{role.name}}</option>
                   </select>
             </div>
-            <div class="invalid-feedback" *ngIf="userService.formModalUser.get('RoleId').touched && userService.formModalUser.get('RoleId').hasError('required')">
+            <div class="invalid-feedback" *ngIf="userService.editUserFormModal.get('RoleId').touched && userService.editUserFormModal.get('RoleId').hasError('required')">
                 This field is required</div>
         </div>
         <div class="form-group">
@@ -49,16 +49,15 @@
                 <div class="input-group-prepend col-md-4 text-center pr-0 pl-0">
                     <div class="input-group-text w-100">User Name</div>
                 </div>
-                <input placeholder="User Name" formControlName="UserName" [ngClass]="{'is-invalid': userService.formModalUser.get('UserName').errors && userService.formModalUser.get('UserName').touched}" class="form-control">
+                <input placeholder="User Name" formControlName="UserName" [ngClass]="{'is-invalid': userService.editUserFormModal.get('UserName').errors && userService.editUserFormModal.get('UserName').touched}" class="form-control">
             </div>
-            <div class="invalid-feedback" *ngIf="userService.formModalUser.get('UserName').touched && userService.formModalUser.get('UserName').hasError('required')">
+            <div class="invalid-feedback" *ngIf="userService.editUserFormModal.get('UserName').touched && userService.editUserFormModal.get('UserName').hasError('required')">
                 This field is required</div>
         </div>
     </form>
 
-    <!-- <div><app-Upload (onUploadFinished)="uploadFinished($event)"></app-Upload></div> -->
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="bsModalRef.hide()" (click)="editUser()">Save</button>
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide();userService.editUserFormModal.reset();">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="editUser()">Save</button>
 </div>

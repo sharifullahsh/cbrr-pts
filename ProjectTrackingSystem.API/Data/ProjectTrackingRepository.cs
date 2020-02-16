@@ -24,8 +24,8 @@ namespace ProjectTrackingSystem.API.Data {
         public async Task<Project> GetProject (int Id) {
             return await _context.Projects.FirstOrDefaultAsync (x => x.Id == Id);
         }
-        public async Task<List<ProjectForListReturn>> GetProjects () {
-            var res = await (from project in _context.Projects where (project.IsDeleted == false) select new ProjectForListReturn {
+        public async Task<List<ProjectForListReturn>> GetAllProjects () {
+            var res = (from project in _context.Projects where (project.IsDeleted == false) select new ProjectForListReturn {
                 Id = project.Id,
                     ProjectCode = project.ProjectCode,
                     ProjectName = project.ProjectName,
@@ -34,8 +34,24 @@ namespace ProjectTrackingSystem.API.Data {
                     EndDate = project.EndDate,
                     Currency = project.Currency.CurrencyName,
                     Programme = project.Programme.ProgrammeName
-            }).ToListAsync ();
-            return res;
+            }).ToListAsync();
+           
+            return await res;
+
+        }
+         public async Task<List<ProjectForListReturn>> GetAllProjects (int programmeId) {
+            var res = (from project in _context.Projects where (project.IsDeleted == false && project.ProgrammeId == programmeId) select new ProjectForListReturn {
+                Id = project.Id,
+                    ProjectCode = project.ProjectCode,
+                    ProjectName = project.ProjectName,
+                    Budget = project.Budget,
+                    StartDate = project.StartDate,
+                    EndDate = project.EndDate,
+                    Currency = project.Currency.CurrencyName,
+                    Programme = project.Programme.ProgrammeName
+            }).ToListAsync();
+           
+            return await res;
 
         }
         public async Task<List<ProjectForDDLDto>> GetProjectsByProgramme (int ProgrammeId) {

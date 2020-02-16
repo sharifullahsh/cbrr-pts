@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertifyService } from '../../_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../_models/user';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService, BsDatepickerConfig } from 'ngx-bootstrap';
 import { Project } from '../../_models/project';
 import { WBS } from '../../_models/WBS';
 import { TransAddModalComponent } from '../Modals/TransAddModal/TransAddModal.component';
@@ -36,16 +36,20 @@ export class TransactionMainComponent implements OnInit {
   drTransactionType: any;
   drProvince: any;
   trans: Transaction;
+  bsConfig: Partial<BsDatepickerConfig>;
   constructor(
-    private WBSService: WBSService,
-    private alertify: AlertifyService,
-    private modalService: BsModalService,
-    private projectService: ProjectService,
-    private route: ActivatedRoute,
-    private projTransService: ProjectTransactionService,
-    private generalService: GeneralService
+    public WBSService: WBSService,
+    public alertify: AlertifyService,
+    public modalService: BsModalService,
+    public projectService: ProjectService,
+    public route: ActivatedRoute,
+    public projTransService: ProjectTransactionService,
+    public generalService: GeneralService
   ) {}
   ngOnInit() {
+    this.bsConfig = {
+      containerClass: 'theme-blue'
+    };
     this.loadProjects();
     this.getTransTypes();
     this.getProvinces();

@@ -9,7 +9,8 @@ namespace ProjectTrackingSystem.API.Data {
         void Add<T> (T entity) where T : class;
         void Delete<T> (T entity) where T : class;
         Task<bool> SaveAll ();
-        Task<List<ProjectForListReturn>> GetProjects ();
+        Task<List<ProjectForListReturn>> GetAllProjects ();
+        Task<List<ProjectForListReturn>> GetAllProjects (int ProgrammeId);
         Task<Project> GetProject (int Id);
         Task<List<ProjectForDDLDto>> GetProjectsByProgramme (int ProgrammeId);
         Task<List<WBSForListDto>> GetWBSes (int ProjectId);

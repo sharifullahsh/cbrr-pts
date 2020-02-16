@@ -22,10 +22,10 @@ export class WBSComponent implements OnInit {
   WBSList: WBS[];
   FilteredWBSList: WBS[];
   projectList: any[];
-  showWBSListDiv:boolean = false;
-  constructor(private WBSService: WBSService, private alertify: AlertifyService,
-              private modalService: BsModalService,
-              private projectService: ProjectService, private route: ActivatedRoute) { }
+  showWBSListDiv: boolean = false;
+  constructor(public WBSService: WBSService, public alertify: AlertifyService,
+              public modalService: BsModalService,
+              public projectService: ProjectService, public route: ActivatedRoute) { }
 
   ngOnInit() {
     // populate the projectList

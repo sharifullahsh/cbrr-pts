@@ -13,9 +13,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 export class ProfileComponent implements OnInit {
 user: RegisterUser;
 bsModalRef: BsModalRef;
-  constructor(private userService: UserService,
-              private authService: AuthService,
-              private modalService: BsModalService) { }
+  constructor(public userService: UserService,
+              public authService: AuthService,
+              public modalService: BsModalService) { }
 
   ngOnInit() {
     this.getUser();

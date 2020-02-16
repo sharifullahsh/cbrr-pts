@@ -20,15 +20,13 @@ export class ChangePassModalComponent implements OnInit {
   submitted = false;
   constructor(
     public bsModalRef: BsModalRef,
-    private alertify: AlertifyService,
-    private userService: UserService,
-    private authServic: AuthService
+    public alertify: AlertifyService,
+    public userService: UserService,
+    public authServic: AuthService
   ) {}
 
   ngOnInit() {
     this.userService.formChangePassModal.reset();
-    console.log("user is >>>>>>>"+ JSON.stringify(this.user));
-    console.log("controls are >>>>>>>>>>>> "+ this.f.Password);
     this.setFormValues();
   }
   setFormValues() {
@@ -40,7 +38,7 @@ export class ChangePassModalComponent implements OnInit {
 
   changePasswod() {
     this.submitted = true;
-    if (!this.userService.formChangePassModal.invalid){
+    if (this.userService.formChangePassModal.valid) {
       this.bsModalRef.hide();
       const passchangeInfo = {
         Id: this.userService.formChangePassModal.get('Id').value,
@@ -49,7 +47,8 @@ export class ChangePassModalComponent implements OnInit {
       };
       this.userService.editPassword(passchangeInfo).subscribe(
         (res: any) => {
-          this.userService.formModalUser.reset();
+          this.userService.formChangePassModal.reset();
+          this.submitted = false;
           this.alertify.success('Operation Successfully!');
         },
         err => {

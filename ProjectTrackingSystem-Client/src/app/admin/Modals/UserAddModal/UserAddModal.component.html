@@ -5,44 +5,51 @@
   </button>
 </div>
 <div class="modal-body">
-    <form #userForm="ngForm" [formGroup]="userService.formModalUser" id="UserForm" autocomplete="off">
+    <form #userForm="ngForm" [formGroup]="userService.addUserFormModal" id="UserAddForm" autocomplete="off">
         <div class="form-group">
-            <select formControlName="ProgramId" class="form-control" [ngClass]="{'is-invalid': userService.formModalUser.get('ProgramId').errors && userService.formModalUser.get('ProgramId').touched}">
+            <select formControlName="ProgramId" class="form-control" [ngClass]="{'is-invalid': userService.addUserFormModal.get('ProgramId').errors && userService.addUserFormModal.get('ProgramId').touched}">
                   <option [ngValue] ="null" disabled selected>Please Select Programme</option>
                   <option *ngFor="let programme of drProgrammes" [value]="programme.id">{{programme.programmeName}}</option>
                 </select>
-            <div class="invalid-feedback" *ngIf="userService.formModalUser.get('ProgramId').touched && userService.formModalUser.get('ProgramId').hasError('required')">
+            <div class="text-danger" *ngIf="(userService.addUserFormModal.get('ProgramId').touched && userService.addUserFormModal.get('ProgramId').hasError('required'))
+            || (submitted && userService.addUserFormModal.get('ProgramId').errors)">
                 This field is required</div>
         </div>
         <div class="form-group">
-            <select formControlName="ProvinceId" class="form-control" [ngClass]="{'is-invalid': userService.formModalUser.get('ProvinceId').errors && userService.formModalUser.get('ProvinceId').touched}">
+            <select formControlName="ProvinceId" class="form-control" [ngClass]="{'is-invalid': userService.addUserFormModal.get('ProvinceId').errors && userService.addUserFormModal.get('ProvinceId').touched}">
       <option [ngValue]="null" disabled selected>Please Select Province</option>
       <option *ngFor="let province of drProvince" [value]="province.id">{{province.provinceName}}</option>
     </select>
+            <div class="text-danger" *ngIf="(userService.addUserFormModal.get('ProvinceId').touched && userService.addUserFormModal.get('ProvinceId').hasError('required'))
+            || (submitted && userService.addUserFormModal.get('ProvinceId').errors)">
+                This field is required</div>
         </div>
         <div class="form-group">
-            <select formControlName="RoleId" class="form-control" [ngClass]="{'is-invalid': userService.formModalUser.get('RoleId').errors && userService.formModalUser.get('RoleId').touched}">
+            <select formControlName="RoleId" class="form-control" [ngClass]="{'is-invalid': userService.addUserFormModal.get('RoleId').errors && userService.addUserFormModal.get('RoleId').touched}">
                 <option [ngValue] ="null" disabled selected>Please Select Role</option>
                 <option *ngFor="let role of drRoles" [value]="role.id">{{role.name}}</option>
               </select>
-            <div class="invalid-feedback" *ngIf="userService.formModalUser.get('RoleId').touched && userService.formModalUser.get('RoleId').hasError('required')">
+            <div class="text-danger" *ngIf="(userService.addUserFormModal.get('RoleId').touched && userService.addUserFormModal.get('RoleId').hasError('required'))
+            || (submitted && userService.addUserFormModal.get('RoleId').errors)">
                 This field is required</div>
         </div>
         <div class="form-group">
-            <input placeholder="User Name" formControlName="UserName" [ngClass]="{'is-invalid': userService.formModalUser.get('UserName').errors && userService.formModalUser.get('UserName').touched}" class="form-control">
-            <div class="invalid-feedback" *ngIf="userService.formModalUser.get('UserName').touched && userService.formModalUser.get('UserName').hasError('required')">
+            <input placeholder="User Name" formControlName="UserName" [ngClass]="{'is-invalid': userService.addUserFormModal.get('UserName').errors && userService.addUserFormModal.get('UserName').touched}" class="form-control">
+            <div class="text-danger" *ngIf="(userService.addUserFormModal.get('UserName').touched && userService.addUserFormModal.get('UserName').hasError('required'))
+            || (submitted && userService.addUserFormModal.get('UserName').errors)">
                 This field is required</div>
         </div>
         <div class="form-group">
-            <input type="password" autocomplete="new-password" placeholder="Password" formControlName="Password" [ngClass]="{'is-invalid': userService.formModalUser.get('Password').errors && userService.formModalUser.get('Password').touched}" class="form-control">
-            <div class="invalid-feedback" *ngIf="userService.formModalUser.get('Password').touched && userService.formModalUser.get('Password').hasError('required')">
-                This field is required</div>
+            <input type="password" autocomplete="new-password" placeholder="Password" formControlName="Password" [ngClass]="{'is-invalid': userService.addUserFormModal.get('Password').errors && userService.addUserFormModal.get('Password').touched}" class="form-control">
+            <div class="text-danger" *ngIf="(userService.addUserFormModal.get('Password').touched && userService.addUserFormModal.get('Password').hasError('required'))
+            || (submitted && userService.addUserFormModal.get('Password').errors)">
+                Password field is required and must be 4 to 8 characters</div>
         </div>
     </form>
 
     <!-- <div><app-Upload (onUploadFinished)="uploadFinished($event)"></app-Upload></div> -->
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="bsModalRef.hide()" (click)="addUser()">Save</button>
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide(); this.userService.addUserFormModal.reset();">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="addUser()">Save</button>
 </div>

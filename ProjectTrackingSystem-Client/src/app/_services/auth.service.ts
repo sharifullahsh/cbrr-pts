@@ -51,4 +51,21 @@ export class AuthService {
     });
     return isMatch;
   }
+  loggedInUser() {
+    if (this.currentUser){
+      return this.currentUser;
+    }
+    this.currentUser = JSON.parse(localStorage.getItem('user'));
+    return this.currentUser;
+  }
+  loggedInUserRole(){
+    let roles  = [] as Array<string>;
+    if (this.decodedToken) {
+      roles =  this.decodedToken.role as Array<string>;
+    }
+    if (localStorage.getItem('token')) {
+     roles =  this.jwtHelper.decodeToken(JSON.parse(localStorage.getItem('token'))).role;
+    }
+    return roles;
+  }
 }

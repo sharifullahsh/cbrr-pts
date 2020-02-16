@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectTrackingSystem.API.Data;
@@ -30,10 +31,19 @@ namespace ProjectTrackingSystem.API.Controllers {
             throw new Exception ("Adding project failed on save");
 
         }
+        [Authorize(Roles = "Admin")]
+        [HttpGet ("GetAllProjects")]
+        public async Task<IActionResult> GetAllProjects () {
+            var projectFromRepo = await _repo.GetAllProjects ();
 
-        [HttpGet ("GetProjects")]
-        public async Task<IActionResult> GetProjects () {
-            var projectFromRepo = await _repo.GetProjects ();
+            // var projects = _mapper.Map<List<ProjectForListReturn>> (projectFromRepo);
+
+            return Ok (projectFromRepo);
+
+        }
+        [HttpGet ("GetProjectsByUserProgramme/{programmeId}")]
+        public async Task<IActionResult> GetProjectsByUserProgramme (int programmeId) {
+            var projectFromRepo = await _repo.GetAllProjects (programmeId);
 
             // var projects = _mapper.Map<List<ProjectForListReturn>> (projectFromRepo);
 

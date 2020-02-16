@@ -17,14 +17,14 @@ export class UserService {
     RoleId: '',
     ProvinceId: ''
     });
-  formModalUser = this.fb.group({
+    addUserFormModal = this.fb.group({
     UserName: ['', Validators.required],
-    Password: ['', Validators.required],
+    Password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
     RoleId: ['', Validators.required],
     ProgramId: ['', Validators.required],
     ProvinceId: ['', Validators.required],
   });
-  formEditModalUser = this.fb.group({
+  editUserFormModal = this.fb.group({
     Id: [''],
     UserName: ['', Validators.required],
     RoleId: ['', Validators.required],

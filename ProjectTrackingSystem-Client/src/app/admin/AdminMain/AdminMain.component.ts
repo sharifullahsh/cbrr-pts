@@ -28,11 +28,11 @@ export class AdminMainComponent implements OnInit {
   drProvince: any;
   drRoles: any;
   constructor(
-    private http: HttpClient,
-    private alertify: AlertifyService,
-    private modalService: BsModalService,
-    private route: ActivatedRoute,
-    private userService: UserService,
+    public http: HttpClient,
+    public alertify: AlertifyService,
+    public modalService: BsModalService,
+    public route: ActivatedRoute,
+    public userService: UserService,
     public projectService: ProjectService,
     public generalService: GeneralService
   ) { }
@@ -48,7 +48,6 @@ export class AdminMainComponent implements OnInit {
     this.userService.getUsers().subscribe((users: any) => {
       this.users = users;
       this.FilteredUsersList = users;
-
     }, error => {
       console.log(error);
     });

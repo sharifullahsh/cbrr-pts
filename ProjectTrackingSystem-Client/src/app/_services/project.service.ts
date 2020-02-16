@@ -1,19 +1,24 @@
+import { AuthService } from 'src/app/_services/auth.service';
 import { Project } from './../_models/project';
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Validators, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { User } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
   baseUrl = environment.apiUrl;
+  user: User;
   // tslint:disable-next-line: no-output-native
   @Output() click: EventEmitter<boolean> = new EventEmitter();
 
-constructor(private http: HttpClient,  private fb: FormBuilder) { }
+constructor(private http: HttpClient,  private fb: FormBuilder, public authService: AuthService) { 
+  this.user = this.authService.loggedInUser();
+}
 
 
 formModalProject = this.fb.group({
@@ -58,7 +63,10 @@ getCurrencies() {
   return  this.http.get(this.baseUrl + 'Lookup/GetCurrencies');
 }
 getProjects() {
-  return  this.http.get(this.baseUrl + 'ProjectTracking/GetProjects');
+  if (this.authService.roleMatch(['Admin'])) {
+  return  this.http.get(this.baseUrl + 'ProjectTracking/GetAllProjects');
+  }
+  return  this.http.get(this.baseUrl + 'ProjectTracking/GetProjectsByUserProgramme/' + this.user.programId);
 }
 getProjectsByProgramme(id: string | number) {
   return  this.http.get(this.baseUrl + 'ProjectTracking/getprojectsbyprogramme/' + id);
